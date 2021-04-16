@@ -7,10 +7,18 @@ class ToDoForm extends Component {
               {users} = this.props,
               PurpleButton = styled.input.attrs({ 
                 type: 'submit',
-                value: !isEdit ? "Add Todo" : "Save" 
+                value: !isEdit ? "Add Todo" : "Save"
               })`
                 background-color: rgb(89, 64, 119);
                 padding: 10px 0;
+                width: 300px;
+                color: #f4f6f8;
+                border: none;
+                cursor: pointer;
+                
+                &:hover {
+                    background-color: rgb(109, 84, 140);
+                }
               `;
 
         return (

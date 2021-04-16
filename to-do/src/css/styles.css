@@ -95,7 +95,7 @@ button.edit-todo {
     width: 300px;
 }
 
-.to-do-form input,
+.to-do-form input[type='text'],
 .to-do-form select,
 .to-do-form textarea,
 .to-do-form button {
@@ -114,17 +114,8 @@ button.edit-todo {
     display: flex;
 }
 
-.btn-container button,
-.btn-container input[type="submit"] {
+.btn-container button {
     cursor: pointer;
     margin-right: 0;
-}
-
-.btn-container input[type="submit"] {
-    background-color: rgb(89, 64, 119);
-    color: #f4f6f8;
-}
-
-.btn-container input[type="submit"]:hover {
-    background-color: rgb(109, 84, 140);
+    margin-bottom: 0;
 }
