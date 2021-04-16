@@ -1,0 +1,136 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 5px 10px;
+    color: #f4f6f8;
+    border: none;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+button.delete-todo {
+    background-color: #b20020;
+}
+
+button.edit-todo {
+    background-color: rgb(89, 64, 119);
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.App {
+    display: flex;
+}
+
+.note-board {
+    width: 60%;
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.note-board .todo {
+    padding: 15px;
+    background-color: #f4f6f8;
+    margin-bottom: 20px;
+    display: flex;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.note-board .todo .profile-picture {
+    margin-right: 10px;
+}
+
+.note-board .todo h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.note-board .todo span {
+    font-size: 11px;
+}
+
+.note-board button.username-btn {
+    color: rgb(89, 64, 119);
+    background: none;
+    padding: 0;
+    margin: 0;
+    display: inline;
+    cursor: pointer;
+}
+
+.note-board button.back-btn {
+    background-color: rgb(89, 64, 119);
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.note-board .todo a:hover{
+    text-decoration: underline;
+}
+
+.note-board .todo p {
+    font-size: 14px;
+}
+
+.note-board .load-more-btn {
+    width: 100%;
+    background-color: rgb(89, 64, 119);
+    padding: 10px 0;
+}
+
+.note-board .load-more-btn:hover {
+    background-color: rgb(109, 84, 140);
+}
+
+.to-do-form {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    width: 300px;
+}
+
+.to-do-form input,
+.to-do-form select,
+.to-do-form textarea,
+.to-do-form button {
+    background-color: #f4f6f8;
+    color: #000;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 300px;
+    box-sizing: border-box;
+    border: none;
+}
+
+.btn-container {
+    display: flex;
+}
+
+.btn-container button,
+.btn-container input[type="submit"] {
+    cursor: pointer;
+    margin-right: 0;
+}
+
+.btn-container input[type="submit"] {
+    background-color: rgb(89, 64, 119);
+    color: #f4f6f8;
+}
+
+.btn-container input[type="submit"]:hover {
+    background-color: rgb(109, 84, 140);
+}
