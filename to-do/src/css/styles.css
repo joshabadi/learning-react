@@ -84,12 +84,6 @@ button.edit-todo {
     font-size: 14px;
 }
 
-.note-board .load-more-btn {
-    width: 100%;
-    background-color: rgb(89, 64, 119);
-    padding: 10px 0;
-}
-
 .note-board .load-more-btn:hover {
     background-color: rgb(109, 84, 140);
 }

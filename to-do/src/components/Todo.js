@@ -8,7 +8,7 @@ class Todo extends Component {
     render() {
         const { filterTodos, todo, deleteTodo, editTodo, todoId, isEdit } = this.props;
         return (
-            <section className="todo">
+            <article className="todo">
                 <ProfilePicture src={todo.profilePicture} />
                 <div className="todo-content">
                     <h3>{todo.title}</h3>
@@ -22,7 +22,7 @@ class Todo extends Component {
                         <EditTodoBtn todoId={todoId} todo={todo} editTodo={editTodo} disabled={isEdit} />
                     </div>
                 </div>
-            </section>
+            </article>
         )
     }
 }
