@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
+import styled from 'styled-components';
 
 class ToDoForm extends Component {
     render() {
         const {title, username, profilePicture, description, isEdit} = this.props.formData,
-              {users} = this.props;
+              {users} = this.props,
+              PurpleButton = styled.input.attrs({ 
+                type: 'submit',
+                value: !isEdit ? "Add Todo" : "Save" 
+              })`
+                background-color: rgb(89, 64, 119);
+                padding: 10px 0;
+              `;
+
         return (
             <form className="to-do-form" onSubmit={this.props.createOrUpdate.bind(this, !isEdit ? 'create' : 'update')}>
                 <input 
@@ -39,7 +48,7 @@ class ToDoForm extends Component {
                     onChange={this.props.handleChange.bind(this, 'description')}>
                 </textarea>
                 <div className="btn-container">
-                    <input type="submit" value={ !isEdit ? "Add Todo" : "Save" } />
+                    <PurpleButton />
                     {
                         isEdit ?(
                             <button type="button" onClick={this.props.cancelEdit.bind(this)}>Cancel</button>
