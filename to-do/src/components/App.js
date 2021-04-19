@@ -20,7 +20,7 @@ class App extends Component {
   handleUpdateTodo = ( todo ) => {
     const todoIndex = this.state.todos.findIndex(element => element.id === todo.id),
           newTodoList = [...this.state.todos];
-          
+
     newTodoList[todoIndex] = todo;
 
     this.setState({
@@ -47,7 +47,6 @@ class App extends Component {
   render(
     {todos, users} = this.state
   ) {
-    console.log( this.state.editableTodo );
     return (
       <div className="App">
         <TodoBoard 
