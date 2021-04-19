@@ -8,7 +8,8 @@ class App extends Component {
     super(props);
     this.state = {
       todos: todoData,
-      users: userData
+      users: userData,
+      editableTodo: null
     }
   }
   handleCreateTodo = ( todo ) => {
@@ -16,11 +17,16 @@ class App extends Component {
       todos: [todo, ...this.state.todos]
     });
   }
-  // updateTodo = () => {
-  //     const currentState = {...this.state}; // grab a copy of current state and set to a new var
-  //     currentState.todos[currentState['form']['todoId']] = {...currentState.form};
-  //     this.setState( currentState );
-  // }
+  handleUpdateTodo = ( todo ) => {
+    const todoIndex = this.state.todos.findIndex(element => element.id === todo.id),
+          newTodoList = [...this.state.todos];
+          
+    newTodoList[todoIndex] = todo;
+
+    this.setState({
+      todos: [...newTodoList]
+    });
+  }
   handleDeleteTodo = ( todoId ) => {
     this.setState({
       todos: this.state.todos.filter(( value ) => {
@@ -28,29 +34,34 @@ class App extends Component {
       })
     });
   }
-  // handleEditTodo = (todoId) => {
-  //   this.setState({
-  //     editableTodo: todoId
-  //   })
-  // }
+  handleGetEditableTodo = ( todoId ) => {
+    return this.state.todos.filter(( todo ) => {
+      return todo.id === todoId;
+    })[0];
+  }
+  handleSetEditableTodo = (todoId) => {
+    this.setState({
+      editableTodo: todoId
+    })
+  }
   render(
     {todos, users} = this.state
   ) {
+    console.log( this.state.editableTodo );
     return (
       <div className="App">
         <TodoBoard 
           todos = {todos}
           deleteTodoHandler = {this.handleDeleteTodo}
-          editTodoHandler = {this.handleEditTodo}
-          // isEdit = {Boolean(typeof this.state.editableTodo != 'undefined')}
+          setEditableTodoHandler = {this.handleSetEditableTodo}
+          isEdit = {Boolean(this.state.editableTodo != null)}
         />
         <TodoForm 
           users = {users} 
           createTodoHandler = {this.handleCreateTodo}
-          // todoId = {this.state.editableTodo}
-          // editableTodoHandler = {this.state.todos.filter(( todo ) => {
-          //   return todo.id === this.state.editableTodo
-          // })}
+          updateTodoHandler = {this.handleUpdateTodo}
+          getEditableTodoHandler = {this.handleGetEditableTodo( this.state.editableTodo )}
+          setEditableTodoHandler = {this.handleSetEditableTodo}
         />
       </div>
     );

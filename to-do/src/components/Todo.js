@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Todo extends Component {
     render(
-        {todo, filterTodos, deleteTodoHandler, editTodoHandler, isEdit} = this.props
+        {todo, filterTodos, deleteTodoHandler, editTodoHandler, setEditableTodoHandler, isEdit} = this.props
     ) {
         return (
             <article className="todo">
@@ -29,7 +29,7 @@ class Todo extends Component {
                         </button>
                         <button
                             className="edit-todo"
-                            onClick = {() => editTodoHandler( todo.id )}
+                            onClick = {() => setEditableTodoHandler( todo.id )}
                             disabled = {isEdit}
                         >
                         edit

@@ -9,7 +9,6 @@ const defaultFormState = {
     profilePicture: '',
     description: '',
     isEdit: false,
-    editID: undefined
 }
 
 
@@ -21,9 +20,14 @@ class ToDoForm extends Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if(prevProps.editID !== this.props.editID ) {
-            this.setState({editID: this.props.editID})
+    componentDidUpdate( prevProps ) {
+        if ( ( JSON.stringify(this.props.getEditableTodoHandler) !== JSON.stringify( prevProps.getEditableTodoHandler ) ) ) {
+            this.setState({
+                ...this.props.getEditableTodoHandler,
+                isEdit: true
+            }, () => {
+                this.props.setEditableTodoHandler( null );
+            });
         }
     }
 
@@ -35,16 +39,23 @@ class ToDoForm extends Component {
 
     handleResetTodoForm = () => {
         this.setState({
-        ...defaultFormState
+            ...defaultFormState
         });
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.createTodoHandler({
-            ...this.state,
-            id: Date.now()
-        });
+
+        if ( Boolean(this.state.isEdit) ) {
+            this.props.updateTodoHandler({
+                ...this.state
+            });
+        } else {
+            this.props.createTodoHandler({
+                ...this.state,
+                id: Date.now()
+            });
+        }
         this.handleResetTodoForm();
     }
 
