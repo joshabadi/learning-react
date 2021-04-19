@@ -23,7 +23,6 @@ class App extends Component {
   // }
   handleDeleteTodo = ( todoId ) => {
     this.setState({
-      ...this.state.todos,
       todos: this.state.todos.filter(( value ) => {
         return value.id !== todoId;
       })
