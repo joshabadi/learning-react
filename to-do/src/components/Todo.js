@@ -1,25 +1,37 @@
 import React, {Component} from 'react';
-import DeleteTodoBtn from './deleteTodoBtn';
-import EditTodoBtn from './editTodoBtn';
-import UsernameBtn from './usernameBtn';
-import ProfilePicture from './profilePicture';
 
 class Todo extends Component {
     render() {
-        const { filterTodos, todo, deleteTodo, editTodo, todoId, isEdit } = this.props;
         return (
             <article className="todo">
-                <ProfilePicture src={todo.profilePicture} />
+                <img className="profile-picture" src={this.props.todo.profilePicture} alt={this.props.todo.profilePicture} />
                 <div className="todo-content">
-                    <h3>{todo.title}</h3>
+                    <h3>{this.props.todo.title}</h3>
                     <span>
                         Created by: 
-                        <UsernameBtn action={filterTodos} additionalParams={todo.username} />
+                        <button 
+                            className="username-btn" 
+                            onClick={() => this.props.filterTodos(this.props.todo.username)}
+                        >
+                            {this.props.todo.username}
+                        </button>
                     </span>
-                    <p>{todo.description}</p>
+                    <p>{this.props.todo.description}</p>
                     <div className="actions">
-                        <DeleteTodoBtn todoId={todoId} deleteTodo={deleteTodo} disabled={isEdit} />
-                        <EditTodoBtn todoId={todoId} todo={todo} editTodo={editTodo} disabled={isEdit} />
+                        <button 
+                            className="delete-todo" 
+                            onClick = {() => this.props.deleteTodoHandler( this.props.todo.id )}
+                            disabled = {this.props.isEdit}
+                        >
+                        X
+                        </button>
+                        <button 
+                            className="edit-todo" 
+                            onClick = {() => this.props.editTodoHandler( this.props.todo.id )}
+                            disabled = {this.props.isEdit}
+                        >
+                        edit
+                        </button>
                     </div>
                 </div>
             </article>

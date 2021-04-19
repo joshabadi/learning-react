@@ -1,49 +1,61 @@
 import React, {Component} from 'react';
 import Todo from './Todo.js';
-import BackBtn from './backBtn.js';
-import LoadMoreBtn from './loadMoreBtn.js'
+// import LoadMoreBtn from './loadMoreBtn.js'
 
 class ToDoBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          username: null, // value that we will be filtering by,
-          page: 1,
-          todoLength: 5
+            usernameFilter: null, // value that we will be filtering by,
+        //   page: 1, // will be added later
+        //   todoLength: 5
         }
     }
     filterTodos = ( username ) => {
         this.setState({
-            ...this.state,
-            'username': username // filtered username
+            usernameFilter: username // filtered username
         });
     }
-    loadMore = () => {
-        const currentState = {...this.state};
-        currentState['page'] = currentState['page'] + 1;
-        this.setState(currentState);
-    }
+    // loadMore = () => {
+    //     const currentState = {...this.state};
+    //     currentState['page'] = currentState['page'] + 1;
+    //     this.setState(currentState);
+    // }
 
     render() {
         let   todos            = this.props.todos;
-        const maxTodosPerPage  = this.state.page * this.state.todoLength;
+        // const maxTodosPerPage  = this.state.page * this.state.todoLength;
 
         // here we can check if the username is null if it isn't we filter the list based on the username
-        todos = ( this.state.username != null ) ? todos.filter( todo => todo.username === this.state.username ) : todos;
-
+        todos = ( this.state.usernameFilter != null ) ? todos.filter( todo => todo.username.includes(this.state.usernameFilter) ) : todos;
         return (
             <section className="note-board">
-                {this.state.username != null ? (
-                    <BackBtn action={this.filterTodos} />
+                {this.state.usernameFilter != null ? (
+                    <button 
+                        className="back-btn" 
+                        onClick={() => this.filterTodos(null)}
+                    >
+                    &larr;
+                    </button>
                 ) : (
                     null
                 )}
 
-                {todos.map(( todo, index ) => {
-                    if ( index <= maxTodosPerPage ) {
+                {todos.map(( todo ) => {
+                    return(
+                        <Todo 
+                            key = {todo.id} 
+                            todo = {todo}
+                            deleteTodoHandler = {this.props.deleteTodoHandler} 
+                            editTodoHandler = {this.props.editTodoHandler}
+                            filterTodos = {this.filterTodos}
+                            isEdit = {this.props.isEdit}
+                        />
+                    )
+                    {/* if ( index <= maxTodosPerPage ) {
                         return(
                             <Todo 
-                                key = {index} 
+                                key = {todo.id} 
                                 todo = {todo} 
                                 todoId = {index} 
                                 deleteTodo = {this.props.deleteTodo} 
@@ -54,14 +66,14 @@ class ToDoBoard extends Component {
                         )
                     } else {
                         return ( null );
-                    }
+                    } */}
                 })}
 
-                {maxTodosPerPage < todos.length ? (
+                {/* {maxTodosPerPage < todos.length ? (
                     <LoadMoreBtn action={this.loadMore} />
                 ):(
                     null
-                )}
+                )} */}
             </section>
         )
     }

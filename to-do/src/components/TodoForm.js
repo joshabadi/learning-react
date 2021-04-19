@@ -2,8 +2,43 @@ import React, {Component} from 'react';
 import styled from 'styled-components';
 
 class ToDoForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: undefined,
+            title: '',
+            username: '',
+            profilePicture: '',
+            description: '',
+            isEdit: false,
+            todoId: this.props.editableTodo
+        }
+    }
+
+    handleFormChange = (field, value) => {
+        this.setState({
+            [field] : value
+        });
+    }
+
+    handleResetTodoForm = () => {
+        this.setState({
+            id: undefined,
+            title: '',
+            username: '',
+            profilePicture: '',
+            description: '',
+            isEdit: false,
+            todoId: undefined
+        });
+    }
+
+    handleCancelEdit = () => {
+        this.handleResetTodoForm();
+    }
+
     render() {
-        const {title, username, profilePicture, description, isEdit} = this.props.formData,
+        const {title, username, profilePicture, description, isEdit} = this.state,
               {users} = this.props,
               PurpleButton = styled.input.attrs({ 
                 type: 'submit',
@@ -22,23 +57,30 @@ class ToDoForm extends Component {
               `;
 
         return (
-            <form className="to-do-form" onSubmit={this.props.createOrUpdate.bind(this, !isEdit ? 'create' : 'update')}>
+            <form className="to-do-form" onSubmit={(e) => {
+                e.preventDefault();
+                this.props.createTodoHandler({
+                    ...this.state,
+                    id: Date.now()
+                });
+                this.handleResetTodoForm();
+            }}>
                 <input 
                     type="text" 
                     name="title" 
                     value={title} 
                     placeholder="Title" 
-                    onChange={this.props.handleChange.bind(this, 'title')}
+                    onChange={(e) => this.handleFormChange('title', e.target.value)}
                 />  
                 <select 
                     name="username"
                     value={username} 
-                    onChange={this.props.handleChange.bind(this, 'username')}
+                    onChange={(e) => this.handleFormChange('username', e.target.value)}
                 >  
                     <option value="">Select user</option>
                     {
-                        users.map(( user, index ) => (
-                            <option key={index} value={user.username}>{user.username}</option>
+                        users.map(( user ) => (
+                            <option key={user.id} value={user.username}>{user.username}</option>
                         ))
                     }
                 </select>
@@ -47,19 +89,19 @@ class ToDoForm extends Component {
                     name="profile-picture" 
                     value={profilePicture} 
                     placeholder="Image url" 
-                    onChange={this.props.handleChange.bind(this, 'profilePicture')} 
+                    onChange={(e) => this.handleFormChange('profilePicture', e.target.value)} 
                 />
                 <textarea
                     rows="5"
                     placeholder="Description"
                     value={description} 
-                    onChange={this.props.handleChange.bind(this, 'description')}>
+                    onChange={(e) => this.handleFormChange('description', e.target.value)}>
                 </textarea>
                 <div className="btn-container">
                     <PurpleButton />
                     {
                         isEdit ?(
-                            <button type="button" onClick={this.props.cancelEdit.bind(this)}>Cancel</button>
+                            <button type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
                         ):(
                             null
                         )

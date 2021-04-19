@@ -8,89 +8,48 @@ class App extends Component {
     super(props);
     this.state = {
       todos: todoData,
-      users: userData,
-      form: {
-        title: '',
-        username: '',
-        profilePicture: '',
-        description: '',
-        isEdit: false,
-        todoId: ''
-      },
-      filtering: false
+      users: userData
     }
   }
-  handleFormChange = (element, e) => {
-    const currentState = { ...this.state }; // grab a copy of current state and set to a new var
-    currentState['form'][element] = e.target.value; // set the associated form key state value to that of the target element
-    this.setState( currentState );
-  }
-  createOrUpdate = ( action, e ) => {
-    e.preventDefault();
-    if ( action === 'create' ) {
-      this.createTodo();
-    } else if ( action === 'update' ) {
-      this.updateTodo();
-    }
-  }
-  createTodo = () => {
-    const currentState = {...this.state}; // grab a copy of current state and set to a new var
-    currentState.todos.unshift( {...currentState.form} ); //add the todo to the beginning of the todo array
-    this.setState( currentState, () => {
-      this.resetTodoForm();
+  handleCreateTodo = ( todo ) => {
+    this.setState({
+      todos: [todo, ...this.state.todos]
     });
   }
-  updateTodo = () => {
-    const currentState = {...this.state}; // grab a copy of current state and set to a new var
-    currentState.todos[currentState['form']['todoId']] = {...currentState.form};
-    this.setState( currentState, () => {
-      this.resetTodoForm();
+  // updateTodo = () => {
+  //     const currentState = {...this.state}; // grab a copy of current state and set to a new var
+  //     currentState.todos[currentState['form']['todoId']] = {...currentState.form};
+  //     this.setState( currentState );
+  // }
+  handleDeleteTodo = ( todoId ) => {
+    this.setState({
+      ...this.state.todos,
+      todos: this.state.todos.filter(( value ) => {
+        return value.id !== todoId;
+      })
     });
   }
-  deleteTodo = (todoId) => {
-    const currentState = {...this.state}; // grab a copy of current state and set to a new var
-    delete currentState['todos'][todoId]; // remove the object at the array index which cooresponds to the todoId
-    this.setState( currentState );
-  }
-  editTodo = (todoId, todo) => {
-    const currentState = {...this.state}; // grab a copy of current state and set to a new var
-    currentState['form'] = {...todo};
-    currentState['form']['isEdit'] = true;
-    currentState['form']['todoId'] = todoId;
-    this.setState(currentState);
-  }
-  cancelEdit = () => {
-    this.resetTodoForm();
-  }
-  resetTodoForm = () => {
-    const currentState = {...this.state}; // grab a copy of current state and set to a new var
-    currentState['form'] = { // reset the values of the form to an empty string and set editing to false
-      title: '',
-      username: '',
-      profilePicture: '',
-      description: '',
-      isEdit: false,
-      noteId: ''
-    }
-    this.setState( currentState );
-  }
+  // handleEditTodo = (todoId) => {
+  //   this.setState({
+  //     editableTodo: todoId
+  //   })
+  // }
   render() {
     return (
       <div className="App">
         <TodoBoard 
           todos = {this.state.todos}
-          deleteTodo = {this.deleteTodo}
-          editTodo = {this.editTodo}
-          filterTodos = {this.filterTodos}
-          isFiltering = {this.state.filtering}
-          isEdit = {this.state.form.isEdit}
+          deleteTodoHandler = {this.handleDeleteTodo}
+          editTodoHandler = {this.handleEditTodo}
+          // isEdit = {Boolean(typeof this.state.editableTodo != 'undefined')}
         />
         <TodoForm 
-          formData = {this.state.form} 
           users = {this.state.users} 
-          handleChange = {this.handleFormChange} 
-          createOrUpdate = {this.createOrUpdate}
-          cancelEdit = {this.cancelEdit} 
+          createTodoHandler = {this.handleCreateTodo}
+          // todoId = {this.state.editableTodo}
+          // editableTodoHandler = {this.state.todos.filter(( todo ) => {
+          //   return todo.id === this.state.editableTodo
+          // })}
         />
       </div>
     );
