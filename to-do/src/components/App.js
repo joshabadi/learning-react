@@ -33,17 +33,19 @@ class App extends Component {
   //     editableTodo: todoId
   //   })
   // }
-  render() {
+  render(
+    {todos, users} = this.state
+  ) {
     return (
       <div className="App">
         <TodoBoard 
-          todos = {this.state.todos}
+          todos = {todos}
           deleteTodoHandler = {this.handleDeleteTodo}
           editTodoHandler = {this.handleEditTodo}
           // isEdit = {Boolean(typeof this.state.editableTodo != 'undefined')}
         />
         <TodoForm 
-          users = {this.state.users} 
+          users = {users} 
           createTodoHandler = {this.handleCreateTodo}
           // todoId = {this.state.editableTodo}
           // editableTodoHandler = {this.state.todos.filter(( todo ) => {

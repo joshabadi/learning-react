@@ -22,14 +22,15 @@ class ToDoBoard extends Component {
     //     this.setState(currentState);
     // }
 
-    render() {
-        let   todos            = this.props.todos;
+    render(
+        {todos} = this.props,
+        {usernameFilter} = this.state
+    ) {
         // const maxTodosPerPage  = this.state.page * this.state.todoLength;
-
         // here we can check if the username is null if it isn't we filter the list based on the username
         return (
             <section className="note-board">
-                {this.state.usernameFilter != null ? (
+                {usernameFilter != null ? (
                     <button 
                         className="back-btn" 
                         onClick={() => this.filterTodos(null)}
@@ -41,7 +42,7 @@ class ToDoBoard extends Component {
                 )}
 
                 {todos.filter(todo => {
-                    return todo.username.includes(this.state.usernameFilter) || this.state.usernameFilter === null; 
+                    return todo.username.includes(usernameFilter) || usernameFilter === null; 
                 }).map(( todo ) => {
                     return(
                         <Todo 
