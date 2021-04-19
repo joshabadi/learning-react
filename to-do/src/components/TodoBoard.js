@@ -29,7 +29,7 @@ class ToDoBoard extends Component {
         // const maxTodosPerPage  = this.state.page * this.state.todoLength;
         // here we can check if the username is null if it isn't we filter the list based on the username
         return (
-            <section className="note-board">
+            <section className="todo-board">
                 {usernameFilter != null ? (
                     <button 
                         className="back-btn" 

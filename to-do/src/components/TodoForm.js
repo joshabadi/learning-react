@@ -11,7 +11,7 @@ class ToDoForm extends Component {
             profilePicture: '',
             description: '',
             isEdit: false,
-            todoId: this.props.editableTodo
+            editableTodo: this.props.editableTodo
         }
     }
 
@@ -29,7 +29,7 @@ class ToDoForm extends Component {
             profilePicture: '',
             description: '',
             isEdit: false,
-            todoId: undefined
+            editableTodo: undefined
         });
     }
 
@@ -57,7 +57,7 @@ class ToDoForm extends Component {
           `
     ) {
         return (
-            <form className="to-do-form" onSubmit={(e) => {
+            <form className="todo-form" onSubmit={(e) => {
                 e.preventDefault();
                 this.props.createTodoHandler({
                     ...this.state,
