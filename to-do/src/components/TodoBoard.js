@@ -33,7 +33,7 @@ class ToDoBoard extends Component {
                 {usernameFilter ? (
                     <button
                         className="back-btn"
-                        onClick={() => this.filterTodos(null)}
+                        onClick={() => this.filterTodos('')}
                     >
                     &larr;
                     </button>
@@ -49,7 +49,7 @@ class ToDoBoard extends Component {
                             key = {todo.id}
                             todo = {todo}
                             deleteTodoHandler = {this.props.deleteTodoHandler}
-                            editTodoHandler = {this.props.editTodoHandler}
+                            setEditableTodoHandler = {this.props.setEditableTodoHandler}
                             filterTodos = {this.filterTodos}
                             isEdit = {this.props.isEdit}
                         />
