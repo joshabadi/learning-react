@@ -24,7 +24,7 @@ const TodoForm = ({
     editableTodo
       ? setFormFields({ ...editableTodo })
       : setFormFields({ ...defaultFormState });
-  }, [editableTodo?.id]);
+  }, [editableTodo]);
 
   const [formFields, setFormFields] = useState({ ...defaultFormState });
 
