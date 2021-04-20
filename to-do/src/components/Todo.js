@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Todo extends Component {
     render(
-        {todo, filterTodos, deleteTodoHandler, editTodoHandler, setEditableTodoHandler, isEdit} = this.props
+        {todo, filterTodos, deleteTodoHandler, setEditableTodoHandler, isEdit} = this.props
     ) {
         return (
             <article className="todo">
