@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import {todoData, userData} from '../sampleData.js';
-import TodoForm from './TodoForm.js';
-import TodoBoard from './TodoBoard.js';
+import React, { Component } from "react";
+import { todoData, userData } from "../sampleData.js";
+import TodoForm from "./TodoForm.js";
+import TodoBoard from "./TodoBoard.js";
 
 class App extends Component {
   constructor(props) {
@@ -9,51 +9,59 @@ class App extends Component {
     this.state = {
       todos: todoData,
       users: userData,
-      editableTodo: null
-    }
+      editableTodoID: null,
+    };
   }
-  handleCreateTodo = ( todo ) => {
+  handleCreateTodo = (todo) => {
+    this.setState(
+      {
+        todos: [todo, ...this.state.todos],
+      },
+      () => this.handleCancelUpdate()
+    );
+  };
+  handleUpdateTodo = (updatedTodo) => {
     this.setState({
-      todos: [todo, ...this.state.todos]
+      todos: this.state.todos.map((todo) =>
+        todo.id === updatedTodo.id ? updatedTodo : todo
+      ),
+      editableTodoID: null,
     });
-  }
-  handleUpdateTodo = ( updatedTodo ) => {
+  };
+  handleDeleteTodo = (todoId) => {
     this.setState({
-      todos: this.state.todos.map(
-        todo => (todo.id === updatedTodo.id ? updatedTodo : todo)
-      )
-    })
-  }
-  handleDeleteTodo = ( todoId ) => {
-    this.setState({
-      todos: this.state.todos.filter( (value) => value.id !== todoId )
+      todos: this.state.todos.filter((value) => value.id !== todoId),
     });
-  }
+  };
+  handleCancelUpdate = () => {
+    this.setState({
+      editableTodoID: null,
+    });
+  };
 
-  handleGetEditableTodo = () => ( this.state.todos.filter( (todo) => todo.id === this.state.editableTodo )[0] );
+  handleGetEditableTodo = () =>
+    this.state.todos.filter((todo) => todo.id === this.state.editableTodoID)[0];
 
   handleSetEditableTodo = (todoId) => {
     this.setState({
-      editableTodo: todoId
-    })
-  }
-  render(
-    {todos, users, editableTodo} = this.state
-  ) {
+      editableTodoID: todoId,
+    });
+  };
+  render({ todos, users, editableTodoID } = this.state) {
     return (
       <div className="App">
-        <TodoBoard 
-          todos = {todos}
-          deleteTodoHandler = {this.handleDeleteTodo}
-          setEditableTodoHandler = {this.handleSetEditableTodo}
-          isEdit = {editableTodo}
+        <TodoBoard
+          todos={todos}
+          deleteTodoHandler={this.handleDeleteTodo}
+          setEditableTodoHandler={this.handleSetEditableTodo}
+          isEdit={editableTodoID !== null}
         />
-        <TodoForm 
-          users = {users} 
-          createTodoHandler = {this.handleCreateTodo}
-          updateTodoHandler = {this.handleUpdateTodo}
-          getEditableTodoHandler = {this.handleGetEditableTodo()}
-          setEditableTodoHandler = {this.handleSetEditableTodo}
+        <TodoForm
+          users={users}
+          createTodoHandler={this.handleCreateTodo}
+          updateTodoHandler={this.handleUpdateTodo}
+          editableTodo={this.handleGetEditableTodo()}
+          cancelUpdateHandler={this.handleCancelUpdate}
         />
       </div>
     );
