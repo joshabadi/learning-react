@@ -1,17 +1,33 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 
+
+const defaultFormState = {
+    id: undefined,
+    title: '',
+    username: '',
+    profilePicture: '',
+    description: '',
+    isEdit: false,
+}
+
+
 class ToDoForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: undefined,
-            title: '',
-            username: '',
-            profilePicture: '',
-            description: '',
-            isEdit: false,
-            editableTodo: this.props.editableTodo
+           ...defaultFormState
+        }
+    }
+
+    componentDidUpdate( prevProps ) {
+        if ( ( JSON.stringify(this.props.getEditableTodoHandler) !== JSON.stringify( prevProps.getEditableTodoHandler ) ) ) {
+            this.setState({
+                ...this.props.getEditableTodoHandler,
+                isEdit: true
+            }, () => {
+                this.props.setEditableTodoHandler( null );
+            });
         }
     }
 
@@ -23,60 +39,56 @@ class ToDoForm extends Component {
 
     handleResetTodoForm = () => {
         this.setState({
-            id: undefined,
-            title: '',
-            username: '',
-            profilePicture: '',
-            description: '',
-            isEdit: false,
-            editableTodo: undefined
+            ...defaultFormState
         });
     }
 
-    handleCancelEdit = () => {
+    handleSubmit = e => {
+        e.preventDefault();
+
+        if ( this.state.isEdit ) {
+            this.props.updateTodoHandler({
+                ...this.state
+            });
+        } else {
+            this.props.createTodoHandler({
+                ...this.state,
+                id: Date.now()
+            });
+        }
         this.handleResetTodoForm();
     }
 
     render(
         {title, username, profilePicture, description, isEdit} = this.state,
         {users} = this.props,
-        PurpleButton = styled.input.attrs({ 
-            type: 'submit',
-            value: !isEdit ? "Add Todo" : "Save"
-          })`
+        PurpleButton = styled.input`
             background-color: rgb(89, 64, 119);
             padding: 10px 0;
             width: 300px;
             color: #f4f6f8;
             border: none;
             cursor: pointer;
-            
+
             &:hover {
                 background-color: rgb(109, 84, 140);
             }
           `
     ) {
         return (
-            <form className="todo-form" onSubmit={(e) => {
-                e.preventDefault();
-                this.props.createTodoHandler({
-                    ...this.state,
-                    id: Date.now()
-                });
-                this.handleResetTodoForm();
-            }}>
-                <input 
-                    type="text" 
-                    name="title" 
-                    value={title} 
-                    placeholder="Title" 
+            <form className="todo-form" onSubmit={this.handleSubmit}>
+                <input
+                    type="text"
+                    name="title"
+                    value={title}
+                    placeholder="Title"
                     onChange={(e) => this.handleFormChange('title', e.target.value)}
-                />  
-                <select 
+                />
+                <select
                     name="username"
-                    value={username} 
+                    value={username}
                     onChange={(e) => this.handleFormChange('username', e.target.value)}
-                >  
+                >
                     <option value="">Select user</option>
                     {
                         users.map(( user ) => (
@@ -84,24 +96,24 @@ class ToDoForm extends Component {
                         ))
                     }
                 </select>
-                <input 
-                    type="text" 
-                    name="profile-picture" 
-                    value={profilePicture} 
-                    placeholder="Image url" 
-                    onChange={(e) => this.handleFormChange('profilePicture', e.target.value)} 
+                <input
+                    type="text"
+                    name="profile-picture"
+                    value={profilePicture}
+                    placeholder="Image url"
+                    onChange={(e) => this.handleFormChange('profilePicture', e.target.value)}
                 />
                 <textarea
                     rows="5"
                     placeholder="Description"
-                    value={description} 
+                    value={description}
                     onChange={(e) => this.handleFormChange('description', e.target.value)}>
                 </textarea>
                 <div className="btn-container">
-                    <PurpleButton />
+                    <PurpleButton type="submit"  value= {!isEdit ? "Add Todo" : "Save"} />
                     {
                         isEdit ?(
-                            <button type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
+                            <button type="button" onClick={() => this.handleResetTodoForm()}>Cancel</button>
                         ):(
                             null
                         )

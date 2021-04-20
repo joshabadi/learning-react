@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 class Todo extends Component {
     render(
-        {todo} = this.props
+        {todo, filterTodos, deleteTodoHandler, setEditableTodoHandler, isEdit} = this.props
     ) {
         return (
             <article className="todo">
@@ -10,27 +10,27 @@ class Todo extends Component {
                 <div className="todo-content">
                     <h3>{todo.title}</h3>
                     <span>
-                        Created by: 
-                        <button 
-                            className="username-btn" 
-                            onClick={() => this.props.filterTodos(todo.username)}
+                        Created by:
+                        <button
+                            className="username-btn"
+                            onClick={() => filterTodos(todo.username)}
                         >
                             {todo.username}
                         </button>
                     </span>
                     <p>{todo.description}</p>
                     <div className="actions">
-                        <button 
-                            className="delete-todo" 
-                            onClick = {() => this.props.deleteTodoHandler( todo.id )}
-                            disabled = {this.props.isEdit}
+                        <button
+                            className="delete-todo"
+                            onClick = {() => deleteTodoHandler( todo.id )}
+                            disabled = {isEdit}
                         >
                         X
                         </button>
-                        <button 
-                            className="edit-todo" 
-                            onClick = {() => this.props.editTodoHandler( todo.id )}
-                            disabled = {this.props.isEdit}
+                        <button
+                            className="edit-todo"
+                            onClick = {() => setEditableTodoHandler( todo.id )}
+                            disabled = {isEdit}
                         >
                         edit
                         </button>

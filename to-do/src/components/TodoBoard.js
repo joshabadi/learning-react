@@ -6,7 +6,7 @@ class ToDoBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            usernameFilter: null, // value that we will be filtering by,
+            usernameFilter: '', // value that we will be filtering by,
         //   page: 1, // will be added later
         //   todoLength: 5
         }
@@ -30,10 +30,10 @@ class ToDoBoard extends Component {
         // here we can check if the username is null if it isn't we filter the list based on the username
         return (
             <section className="todo-board">
-                {usernameFilter != null ? (
-                    <button 
-                        className="back-btn" 
-                        onClick={() => this.filterTodos(null)}
+                {usernameFilter ? (
+                    <button
+                        className="back-btn"
+                        onClick={() => this.filterTodos('')}
                     >
                     &larr;
                     </button>
@@ -42,25 +42,25 @@ class ToDoBoard extends Component {
                 )}
 
                 {todos.filter(todo => {
-                    return todo.username.includes(usernameFilter) || usernameFilter === null; 
+                    return todo.username.includes(usernameFilter);
                 }).map(( todo ) => {
                     return(
-                        <Todo 
-                            key = {todo.id} 
+                        <Todo
+                            key = {todo.id}
                             todo = {todo}
-                            deleteTodoHandler = {this.props.deleteTodoHandler} 
-                            editTodoHandler = {this.props.editTodoHandler}
+                            deleteTodoHandler = {this.props.deleteTodoHandler}
+                            setEditableTodoHandler = {this.props.setEditableTodoHandler}
                             filterTodos = {this.filterTodos}
                             isEdit = {this.props.isEdit}
                         />
                     )
                     {/* if ( index <= maxTodosPerPage ) {
                         return(
-                            <Todo 
-                                key = {todo.id} 
-                                todo = {todo} 
-                                todoId = {index} 
-                                deleteTodo = {this.props.deleteTodo} 
+                            <Todo
+                                key = {todo.id}
+                                todo = {todo}
+                                todoId = {index}
+                                deleteTodo = {this.props.deleteTodo}
                                 editTodo = {this.props.editTodo}
                                 filterTodos = {this.filterTodos}
                                 isEdit = {this.props.isEdit}
