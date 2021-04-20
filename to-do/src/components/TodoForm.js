@@ -1,5 +1,8 @@
-import React, { Component } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import * as el from "./App.Styled";
+
+// { title, username, profilePicture, description } = this.state,
+// { users, cancelUpdateHandler } = this.props,
 
 const defaultFormState = {
   id: undefined,
@@ -9,118 +12,94 @@ const defaultFormState = {
   description: "",
 };
 
-class ToDoForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      ...defaultFormState,
-    };
-  }
+const TodoForm = ({
+  users,
+  cancelUpdateHandler,
+  editableTodo,
+  updateTodoHandler,
+  createTodoHandler,
+}) => {
+  useEffect(() => {
+    // TODO: Read useEffect docs
+    editableTodo
+      ? setFormFields({ ...editableTodo })
+      : setFormFields({ ...defaultFormState });
+  }, [editableTodo?.id]);
 
-  componentDidUpdate(prevProps) {
-    // LOOKUP: optional chaining
-    if (this.props?.editableTodo?.id !== prevProps?.editableTodo?.id) {
-      if (this.props.editableTodo) {
-        this.setState({ ...this.props.editableTodo });
-      } else {
-        this.setState({ ...defaultFormState });
-      }
-    }
-  }
+  const [formFields, setFormFields] = useState({ ...defaultFormState });
 
-  handleFormChange = (field, value) => {
-    this.setState({
+  const handleFormChange = (field, value) => {
+    setFormFields({
+      ...formFields,
       [field]: value,
     });
   };
 
-  handleResetTodoForm = () => {
-    this.setState({
-      ...defaultFormState,
-    });
-  };
+  const handleResetTodoForm = () => setFormFields({ ...defaultFormState });
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (this.props.editableTodo) {
-      this.props.updateTodoHandler({
-        ...this.state,
+    if (editableTodo) {
+      updateTodoHandler({
+        ...formFields,
       });
     } else {
-      this.props.createTodoHandler({
-        ...this.state,
+      createTodoHandler({
+        ...formFields,
         id: Date.now(),
       });
     }
-    //async
-    this.handleResetTodoForm();
+
+    handleResetTodoForm();
   };
 
-  render(
-    { title, username, profilePicture, description } = this.state,
-    { users, cancelUpdateHandler } = this.props,
-    PurpleButton = styled.input`
-      background-color: rgb(89, 64, 119);
-      padding: 10px 0;
-      width: 300px;
-      color: #f4f6f8;
-      border: none;
-      cursor: pointer;
+  const isEdit = Boolean(editableTodo);
 
-      &:hover {
-        background-color: rgb(109, 84, 140);
-      }
-    `,
-    isEdit = Boolean(this.props.editableTodo)
-  ) {
-    return (
-      <form className="todo-form" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          value={title}
-          placeholder="Title"
-          onChange={(e) => this.handleFormChange("title", e.target.value)}
-        />
-        <select
-          name="username"
-          value={username}
-          onChange={(e) => this.handleFormChange("username", e.target.value)}
-        >
-          <option value="">Select user</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.username}>
-              {user.username}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          name="profile-picture"
-          value={profilePicture}
-          placeholder="Image url"
-          onChange={(e) =>
-            this.handleFormChange("profilePicture", e.target.value)
-          }
-        />
-        <textarea
-          rows="5"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => this.handleFormChange("description", e.target.value)}
-        ></textarea>
-        <div className="btn-container">
-          <PurpleButton type="submit" value={!isEdit ? "Add Todo" : "Save"} />
-          {isEdit ? (
-            <button type="button" onClick={() => cancelUpdateHandler()}>
-              Cancel
-            </button>
-          ) : null}
-        </div>
-      </form>
-    );
-  }
-}
+  return (
+    <form className="todo-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="title"
+        value={formFields.title}
+        placeholder="Title"
+        onChange={(e) => handleFormChange("title", e.target.value)}
+      />
+      <select
+        name="username"
+        value={formFields.username}
+        onChange={(e) => handleFormChange("username", e.target.value)}
+      >
+        <option value="">Select user</option>
+        {users.map((user) => (
+          <option key={user.id} value={user.username}>
+            {user.username}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        name="profile-picture"
+        value={formFields.profilePicture}
+        placeholder="Image url"
+        onChange={(e) => handleFormChange("profilePicture", e.target.value)}
+      />
+      <textarea
+        rows="5"
+        placeholder="Description"
+        value={formFields.description}
+        onChange={(e) => handleFormChange("description", e.target.value)}
+      ></textarea>
+      <div className="btn-container">
+        <el.PurpleButton type="submit" value={!isEdit ? "Add Todo" : "Save"} />
+        {isEdit ? (
+          <button type="button" onClick={() => cancelUpdateHandler()}>
+            Cancel
+          </button>
+        ) : null}
+      </div>
+    </form>
+  );
+};
 
-export default ToDoForm;
+export default TodoForm;

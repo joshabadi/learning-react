@@ -1,60 +1,50 @@
-import React, {Component} from 'react';
-import Todo from './Todo.js';
+import React, { useState } from "react";
+import Todo from "./Todo.js";
 // import LoadMoreBtn from './loadMoreBtn.js'
 
-class ToDoBoard extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            usernameFilter: '', // value that we will be filtering by,
-        //   page: 1, // will be added later
-        //   todoLength: 5
-        }
-    }
-    filterTodos = ( username ) => {
-        this.setState({
-            usernameFilter: username // filtered username
-        });
-    }
-    // loadMore = () => {
-    //     const currentState = {...this.state};
-    //     currentState['page'] = currentState['page'] + 1;
-    //     this.setState(currentState);
-    // }
+const TodoBoard = ({
+  todos,
+  deleteTodoHandler,
+  setEditableTodoHandler,
+  isEdit,
+}) => {
+  const [usernameFilter, setUsernameFilter] = useState("");
 
-    render(
-        {todos} = this.props,
-        {usernameFilter} = this.state
-    ) {
-        // const maxTodosPerPage  = this.state.page * this.state.todoLength;
-        // here we can check if the username is null if it isn't we filter the list based on the username
-        return (
-            <section className="todo-board">
-                {usernameFilter ? (
-                    <button
-                        className="back-btn"
-                        onClick={() => this.filterTodos('')}
-                    >
-                    &larr;
-                    </button>
-                ) : (
-                    null
-                )}
+  const handleFilterTodos = (username) => {
+    setUsernameFilter(username);
+  };
 
-                {todos.filter(todo => {
-                    return todo.username.includes(usernameFilter);
-                }).map(( todo ) => {
-                    return(
-                        <Todo
-                            key = {todo.id}
-                            todo = {todo}
-                            deleteTodoHandler = {this.props.deleteTodoHandler}
-                            setEditableTodoHandler = {this.props.setEditableTodoHandler}
-                            filterTodos = {this.filterTodos}
-                            isEdit = {this.props.isEdit}
-                        />
-                    )
-                    {/* if ( index <= maxTodosPerPage ) {
+  // const loadMore = () => {
+  //     const currentState = {...this.state};
+  //     currentState['page'] = currentState['page'] + 1;
+  //     this.setState(currentState);
+  // }
+
+  return (
+    <section className="todo-board">
+      {usernameFilter ? (
+        <button className="back-btn" onClick={() => handleFilterTodos("")}>
+          &larr;
+        </button>
+      ) : null}
+
+      {todos
+        .filter((todo) => {
+          return todo.username.includes(usernameFilter);
+        })
+        .map((todo) => {
+          return (
+            <Todo
+              key={todo.id}
+              todo={todo}
+              deleteTodoHandler={deleteTodoHandler}
+              setEditableTodoHandler={setEditableTodoHandler}
+              filterTodoHandler={handleFilterTodos}
+              isEdit={isEdit}
+            />
+          );
+          {
+            /* if ( index <= maxTodosPerPage ) {
                         return(
                             <Todo
                                 key = {todo.id}
@@ -68,17 +58,17 @@ class ToDoBoard extends Component {
                         )
                     } else {
                         return ( null );
-                    } */}
-                })}
+                    } */
+          }
+        })}
 
-                {/* {maxTodosPerPage < todos.length ? (
+      {/* {maxTodosPerPage < todos.length ? (
                     <LoadMoreBtn action={this.loadMore} />
                 ):(
                     null
                 )} */}
-            </section>
-        )
-    }
-}
+    </section>
+  );
+};
 
-export default ToDoBoard;
+export default TodoBoard;
