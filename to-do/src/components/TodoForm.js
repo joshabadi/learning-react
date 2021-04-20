@@ -46,7 +46,7 @@ class ToDoForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        if ( Boolean(this.state.isEdit) ) {
+        if ( this.state.isEdit ) {
             this.props.updateTodoHandler({
                 ...this.state
             });
