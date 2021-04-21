@@ -18,15 +18,9 @@ export const App = () => {
   const reducer = (state, action) => {
     switch (action.type) {
       case actionTypes.setTodos:
-        return {
-          ...state,
-          todos: action.payload,
-        };
+        return { ...state, todos: action.payload };
       case actionTypes.setEditableTodoID:
-        return {
-          ...state,
-          editableTodoID: action.payload,
-        };
+        return { ...state, editableTodoID: action.payload };
       default:
         throw new Error();
     }
@@ -35,14 +29,8 @@ export const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleCreateTodo = (todo) => {
-    dispatch({
-      type: actionTypes.setTodos,
-      payload: [todo, ...state.todos],
-    });
-    dispatch({
-      type: actionTypes.setEditableTodoID,
-      payload: null,
-    });
+    dispatch({ type: actionTypes.setTodos, payload: [todo, ...state.todos] });
+    dispatch({ type: actionTypes.setEditableTodoID, payload: null });
   };
 
   const handleUpdateTodo = (updatedTodo) => {
