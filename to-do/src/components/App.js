@@ -1,62 +1,38 @@
 import React, { useReducer } from "react";
-import { todoData, userData } from "../sampleData.js";
-import TodoForm from "./TodoForm.js";
-import TodoBoard from "./TodoBoard.js";
+import * as AppState from "./App.hooks";
+import TodoForm from "./TodoForm";
+import TodoBoard from "./TodoBoard";
 
 export const App = () => {
-  const initialState = {
-    todos: todoData,
-    users: userData,
-    editableTodoID: null,
-  };
-
-  const actionTypes = {
-    setTodos: "setTodos",
-    setEditableTodoID: "setEditableTodoID",
-  };
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case actionTypes.setTodos:
-        return { ...state, todos: action.payload };
-      case actionTypes.setEditableTodoID:
-        return { ...state, editableTodoID: action.payload };
-      default:
-        throw new Error();
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(
+    AppState.appStateReducer,
+    AppState.InitialAppState
+  );
 
   const handleCreateTodo = (todo) => {
-    dispatch({ type: actionTypes.setTodos, payload: [todo, ...state.todos] });
-    dispatch({ type: actionTypes.setEditableTodoID, payload: null });
+    dispatch({ type: AppState.CREATE_TODO, payload: todo });
   };
 
   const handleUpdateTodo = (updatedTodo) => {
     dispatch({
-      type: actionTypes.setTodos,
-      payload: state.todos.map((todo) =>
-        todo.id === updatedTodo.id ? updatedTodo : todo
-      ),
+      type: AppState.UPDATE_TODO,
+      payload: updatedTodo,
     });
-    dispatch({ type: actionTypes.setEditableTodoID, payload: null });
   };
 
   const handleDeleteTodo = (todoID) =>
     dispatch({
-      type: "setTodos",
-      payload: state.todos.filter((value) => value.id !== todoID),
+      type: AppState.DELETE_TODO,
+      payload: todoID,
     });
 
-  const handleCancelUpdate = () =>
-    dispatch({ type: actionTypes.setEditableTodoID, payload: null });
+  const handleCancelUpdate = () => dispatch({ type: AppState.CANCEL_EDIT });
 
   const handleGetEditableTodo = () =>
     state.todos.filter((todo) => todo.id === state.editableTodoID)[0];
 
   const handleSetEditableTodo = (todoId) =>
-    dispatch({ type: actionTypes.setEditableTodoID, payload: todoId });
+    dispatch({ type: AppState.SET_EDITABLE_TODO_ID, payload: todoId });
 
   return (
     <div className="App">
