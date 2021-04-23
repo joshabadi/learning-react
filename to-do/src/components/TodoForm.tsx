@@ -38,7 +38,7 @@ const TodoForm = ({
 
   const [formFields, setFormFields] = useState<ITodo>({ ...defaultFormState });
 
-  const handleFormChange = (field: any, value: any) => {
+  const handleFormChange = (field: string, value: string) => {
     setFormFields({
       ...formFields,
       [field]: value,
@@ -82,7 +82,7 @@ const TodoForm = ({
         onChange={(e) => handleFormChange("username", e.target.value)}
       >
         <option value="">Select user</option>
-        {users.map((user: any) => (
+        {users.map((user: IUser) => (
           <option key={user.id} value={user.username}>
             {user.username}
           </option>
