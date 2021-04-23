@@ -39,13 +39,14 @@ const TodoForm = ({
   createTodoHandler,
 }: ITodoFormProps) => {
   useEffect(() => {
-    // TODO: Read useEffect docs
     editableTodo
       ? setFormFields({ ...editableTodo })
       : setFormFields({ ...defaultFormState });
   }, [editableTodo, editableTodo?.id]);
 
   const [formFields, setFormFields] = useState<ITodo>({ ...defaultFormState });
+
+  const [isVisible, toggleIsVisible] = useState(false);
 
   const handleFormChange = (field: any, value: any) => {
     setFormFields({

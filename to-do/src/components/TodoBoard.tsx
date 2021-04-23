@@ -9,6 +9,7 @@ interface ITodoBoardProps {
   deleteTodoHandler: () => void;
   setEditableTodoHandler: () => void;
   isEdit: boolean;
+  isVisible: boolean;
 }
 
 interface ITodoBoardState {
@@ -20,6 +21,7 @@ const TodoBoard = ({
   deleteTodoHandler,
   setEditableTodoHandler,
   isEdit,
+  isVisible,
 }: ITodoBoardProps) => {
   const [usernameFilter, setUsernameFilter] = useState("");
 
@@ -32,7 +34,6 @@ const TodoBoard = ({
   //     currentState['page'] = currentState['page'] + 1;
   //     this.setState(currentState);
   // }
-
   return (
     <List className="todo-board">
       {usernameFilter ? (
@@ -45,7 +46,7 @@ const TodoBoard = ({
         .filter((todo) => {
           return todo.username.includes(usernameFilter);
         })
-        .map((todo) => {
+        .map((todo, index) => {
           return (
             <React.Fragment>
               <Todo
@@ -56,7 +57,9 @@ const TodoBoard = ({
                 filterTodoHandler={handleFilterTodos}
                 isEdit={isEdit}
               />
-              <Divider variant="inset" component="li" />
+              {index < todos.length - 1 ? (
+                <Divider variant="inset" component="li" />
+              ) : null}
             </React.Fragment>
           );
           {

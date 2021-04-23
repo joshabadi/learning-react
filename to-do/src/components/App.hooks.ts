@@ -6,6 +6,7 @@ interface IAppState {
   todos: Array<ITodo>; // can also write ITodo[], https://www.typescriptlang.org/docs/handbook/basic-types.html#array
   users: Array<IUser>;
   editableTodoID: number | null;
+  todoFormIsVisible: boolean;
 }
 
 interface IAction {
@@ -17,6 +18,7 @@ export const InitialAppState: IAppState = {
   todos: todoData,
   users: userData,
   editableTodoID: null,
+  todoFormIsVisible: false,
 };
 
 export const CREATE_TODO = "CREATE_TODO";
@@ -24,6 +26,7 @@ export const SET_EDITABLE_TODO_ID = "SET_EDITABLE_TODO_ID";
 export const CANCEL_EDIT = "CANCEL_EDIT";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const DELETE_TODO = "DELETE_TODO";
+export const TOGGLE_TODO_FORM = "TOGGLE_TODO_FORM";
 
 export const appStateReducer = (
   state: IAppState,
@@ -37,7 +40,11 @@ export const appStateReducer = (
         editableTodoID: null,
       };
     case SET_EDITABLE_TODO_ID:
-      return { ...state, editableTodoID: action.payload };
+      return {
+        ...state,
+        editableTodoID: action.payload,
+        todoFormIsVisible: true,
+      };
     case CANCEL_EDIT:
       return { ...state, editableTodoID: null };
     case UPDATE_TODO: {
@@ -52,6 +59,13 @@ export const appStateReducer = (
       );
 
       return { ...state, todos: [...updatedTodos] };
+    }
+    case TOGGLE_TODO_FORM: {
+      return {
+        ...state,
+        todoFormIsVisible: action.payload,
+        editableTodoID: null,
+      };
     }
 
     default:

@@ -4,9 +4,9 @@ import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
@@ -87,27 +87,22 @@ const Todo = ({
           open={open}
           onClose={handleClose}
         >
-          <MenuItem>
-            <Button
-              onClick={() => setEditableTodoHandler(todo.id)}
-              variant="text"
-              color="default"
-              startIcon={<EditIcon />}
-              size="small"
-            >
-              Edit
-            </Button>
+          <MenuItem onClick={() => setEditableTodoHandler(todo.id)}>
+            <ListItemIcon>
+              <EditIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Edit" />
           </MenuItem>
-          <MenuItem>
-            <Button
-              onClick={() => deleteTodoHandler(todo.id)}
-              variant="text"
-              color="secondary"
-              startIcon={<DeleteIcon />}
-              size="small"
-            >
-              Delete
-            </Button>
+          <MenuItem
+            color="secondary"
+            onClick={() => deleteTodoHandler(todo.id)}
+          >
+            <ListItemIcon>
+              <DeleteIcon color="secondary" fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>
+              <Typography color="secondary">Delete</Typography>
+            </ListItemText>
           </MenuItem>
         </Menu>
       </div>

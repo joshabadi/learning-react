@@ -1,13 +1,10 @@
 import React, { useReducer } from "react";
 import * as AppState from "./App.hooks";
+import { ThemeProvider } from "@material-ui/core/styles";
+import * as StyledElements from "../styles/App.Styled";
 import { Header } from "./Header";
 import TodoForm from "./TodoForm";
 import TodoBoard from "./TodoBoard";
-import {
-  makeStyles,
-  ThemeProvider,
-  createMuiTheme,
-} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import "fontsource-roboto";
 
@@ -39,9 +36,19 @@ export const App = () => {
   const handleSetEditableTodo = (todoId) =>
     dispatch({ type: AppState.SET_EDITABLE_TODO_ID, payload: todoId });
 
+  const handleToggleForm = () => {
+    dispatch({
+      type: AppState.TOGGLE_TODO_FORM,
+      payload: !state.todoFormIsVisible,
+    });
+  };
+
   return (
-    <ThemeProvider>
-      <Header />
+    <ThemeProvider theme={StyledElements.MasterTheme}>
+      <Header
+        toggleFormHandler={handleToggleForm}
+        isVisible={state.todoFormIsVisible}
+      />
       <Container maxWidth="sm">
         <div className="App">
           <TodoBoard
@@ -50,13 +57,15 @@ export const App = () => {
             setEditableTodoHandler={handleSetEditableTodo}
             isEdit={state.editableTodoID !== null}
           />
-          <TodoForm
-            users={state.users}
-            createTodoHandler={handleCreateTodo}
-            updateTodoHandler={handleUpdateTodo}
-            editableTodo={handleGetEditableTodo()}
-            cancelUpdateHandler={handleCancelUpdate}
-          />
+          {state.todoFormIsVisible ? (
+            <TodoForm
+              users={state.users}
+              createTodoHandler={handleCreateTodo}
+              updateTodoHandler={handleUpdateTodo}
+              editableTodo={handleGetEditableTodo()}
+              cancelUpdateHandler={handleCancelUpdate}
+            />
+          ) : null}
         </div>
       </Container>
     </ThemeProvider>

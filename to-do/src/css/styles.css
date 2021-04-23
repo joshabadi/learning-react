@@ -42,7 +42,7 @@ button.edit-todo {
   height: 100%;
   flex: 1;
   flex-direction: column-reverse;
-  margin: 80px auto 0 auto;
+  margin: 60px auto 0 auto;
 }
 
 .todo-board {
