@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import Todo from "./Todo.js";
+import { ITodo } from "../types/todo.types";
+import Todo from "./Todo";
 // import LoadMoreBtn from './loadMoreBtn.js'
+interface ITodoBoardProps {
+  todos: Array<ITodo>;
+  deleteTodoHandler: () => void;
+  setEditableTodoHandler: () => void;
+  isEdit: boolean;
+}
+
+interface ITodoBoardState {
+  usernameFilter: string;
+}
 
 const TodoBoard = ({
   todos,
   deleteTodoHandler,
   setEditableTodoHandler,
   isEdit,
-}) => {
+}: ITodoBoardProps) => {
   const [usernameFilter, setUsernameFilter] = useState("");
 
-  const handleFilterTodos = (username) => {
+  const handleFilterTodos = (username: string) => {
     setUsernameFilter(username);
   };
 

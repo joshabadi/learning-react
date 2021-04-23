@@ -1,45 +1,49 @@
-import React, { useState } from "react";
-import { todoData, userData } from "../sampleData.js";
-import TodoForm from "./TodoForm.js";
-import TodoBoard from "./TodoBoard.js";
+import React, { useReducer } from "react";
+import * as AppState from "./App.hooks";
+import TodoForm from "./TodoForm";
+import TodoBoard from "./TodoBoard";
 
 export const App = () => {
-  const [todos, setTodos] = useState(todoData);
-  const [users, setUsers] = useState(userData);
-  const [editableTodoID, setEditableTodoID] = useState(null);
+  const [state, dispatch] = useReducer(
+    AppState.appStateReducer,
+    AppState.InitialAppState
+  );
 
   const handleCreateTodo = (todo) => {
-    setTodos([todo, ...todos]);
-    setEditableTodoID(null);
+    dispatch({ type: AppState.CREATE_TODO, payload: todo });
   };
 
   const handleUpdateTodo = (updatedTodo) => {
-    setTodos(
-      todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
-    );
-    setEditableTodoID(null);
+    dispatch({
+      type: AppState.UPDATE_TODO,
+      payload: updatedTodo,
+    });
   };
 
   const handleDeleteTodo = (todoID) =>
-    setTodos(todos.filter((value) => value.id !== todoID));
+    dispatch({
+      type: AppState.DELETE_TODO,
+      payload: todoID,
+    });
 
-  const handleCancelUpdate = () => setEditableTodoID(null);
+  const handleCancelUpdate = () => dispatch({ type: AppState.CANCEL_EDIT });
 
   const handleGetEditableTodo = () =>
-    todos.filter((todo) => todo.id === editableTodoID)[0];
+    state.todos.filter((todo) => todo.id === state.editableTodoID)[0];
 
-  const handleSetEditableTodo = (todoId) => setEditableTodoID(todoId);
+  const handleSetEditableTodo = (todoId) =>
+    dispatch({ type: AppState.SET_EDITABLE_TODO_ID, payload: todoId });
 
   return (
     <div className="App">
       <TodoBoard
-        todos={todos}
+        todos={state.todos}
         deleteTodoHandler={handleDeleteTodo}
         setEditableTodoHandler={handleSetEditableTodo}
-        isEdit={editableTodoID !== null}
+        isEdit={state.editableTodoID !== null}
       />
       <TodoForm
-        users={users}
+        users={state.users}
         createTodoHandler={handleCreateTodo}
         updateTodoHandler={handleUpdateTodo}
         editableTodo={handleGetEditableTodo()}

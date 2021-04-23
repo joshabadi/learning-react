@@ -1,4 +1,13 @@
 import React from "react";
+import { ITodo } from "../types/todo.types";
+
+interface ITodoProps {
+  todo: ITodo;
+  filterTodoHandler: (username: string) => void;
+  deleteTodoHandler: (id: number | null) => void;
+  setEditableTodoHandler: (id: number | null) => void;
+  isEdit: boolean;
+}
 
 const Todo = ({
   todo,
@@ -6,7 +15,7 @@ const Todo = ({
   deleteTodoHandler,
   setEditableTodoHandler,
   isEdit,
-}) => {
+}: ITodoProps) => {
   return (
     <article className="todo">
       <img

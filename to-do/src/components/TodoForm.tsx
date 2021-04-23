@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { ITodo } from "../types/todo.types";
+import { IUser } from "../types/user.types";
 import * as el from "./App.Styled";
 
 // { title, username, profilePicture, description } = this.state,
 // { users, cancelUpdateHandler } = this.props,
 
-const defaultFormState = {
-  id: undefined,
+interface ITodoFormProps {
+  users: Array<IUser>;
+  cancelUpdateHandler: () => void;
+  editableTodo: ITodo;
+  updateTodoHandler: (todo: ITodo) => void;
+  createTodoHandler: (todo: ITodo) => void;
+}
+
+const defaultFormState: ITodo = {
+  id: null,
   title: "",
   username: "",
   profilePicture: "",
@@ -18,7 +28,7 @@ const TodoForm = ({
   editableTodo,
   updateTodoHandler,
   createTodoHandler,
-}) => {
+}: ITodoFormProps) => {
   useEffect(() => {
     // TODO: Read useEffect docs
     editableTodo
@@ -26,9 +36,9 @@ const TodoForm = ({
       : setFormFields({ ...defaultFormState });
   }, [editableTodo, editableTodo?.id]);
 
-  const [formFields, setFormFields] = useState({ ...defaultFormState });
+  const [formFields, setFormFields] = useState<ITodo>({ ...defaultFormState });
 
-  const handleFormChange = (field, value) => {
+  const handleFormChange = (field: string, value: string) => {
     setFormFields({
       ...formFields,
       [field]: value,
@@ -37,7 +47,8 @@ const TodoForm = ({
 
   const handleResetTodoForm = () => setFormFields({ ...defaultFormState });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    // BONUS: Look up React Event types
     e.preventDefault();
 
     if (editableTodo) {
@@ -71,7 +82,7 @@ const TodoForm = ({
         onChange={(e) => handleFormChange("username", e.target.value)}
       >
         <option value="">Select user</option>
-        {users.map((user) => (
+        {users.map((user: IUser) => (
           <option key={user.id} value={user.username}>
             {user.username}
           </option>
@@ -85,7 +96,7 @@ const TodoForm = ({
         onChange={(e) => handleFormChange("profilePicture", e.target.value)}
       />
       <textarea
-        rows="5"
+        rows={5}
         placeholder="Description"
         value={formFields.description}
         onChange={(e) => handleFormChange("description", e.target.value)}
