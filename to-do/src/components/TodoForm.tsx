@@ -13,6 +13,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { ButtonGroup } from "@material-ui/core";
 
 interface ITodoFormProps {
   users: Array<IUser>;
@@ -81,12 +82,12 @@ const TodoForm = ({
         value={formFields.title}
         label="Title"
         onChange={(e) => handleFormChange("title", e.target.value)}
-        variant="outlined"
+        variant="standard"
       />
-      <FormControl variant="outlined">
-        <InputLabel id="demo-simple-select-outlined-label">Username</InputLabel>
+      <FormControl variant="standard">
+        <InputLabel id="demo-simple-select-standard-label">Username</InputLabel>
         <Select
-          labelId="demo-simple-select-outlined-label"
+          labelId="demo-simple-select-standard-label"
           value={formFields.username}
           onChange={(e: any) => handleFormChange("username", e.target.value)}
           label="Age"
@@ -105,36 +106,34 @@ const TodoForm = ({
         value={formFields.profilePicture}
         label="Image Url"
         onChange={(e) => handleFormChange("profilePicture", e.target.value)}
-        variant="outlined"
+        variant="standard"
       />
       <TextField
         label="Description"
         value={formFields.description}
         onChange={(e) => handleFormChange("description", e.target.value)}
-        variant="outlined"
+        variant="standard"
         multiline
       />
       <div className="btn-container">
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          startIcon={!isEdit ? <AddIcon /> : <SaveIcon />}
-          size="small"
-        >
-          {!isEdit ? "Add Todo" : "Save"}
-        </Button>
-        {isEdit ? (
+        <ButtonGroup variant="contained" size="small">
           <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => cancelUpdateHandler()}
-            startIcon={<CancelIcon />}
-            size="small"
+            type="submit"
+            color="primary"
+            startIcon={!isEdit ? <AddIcon /> : <SaveIcon />}
           >
-            Cancel
+            {!isEdit ? "Add Todo" : "Save"}
           </Button>
-        ) : null}
+          {isEdit ? (
+            <Button
+              color="secondary"
+              onClick={() => cancelUpdateHandler()}
+              endIcon={<CancelIcon />}
+            >
+              Cancel
+            </Button>
+          ) : null}
+        </ButtonGroup>
       </div>
     </form>
   );

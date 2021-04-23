@@ -57,7 +57,15 @@ const Todo = ({
                   className=""
                   color="textPrimary"
                 >
-                  {todo.username}
+                  Created by:{" "}
+                  <Button
+                    variant="text"
+                    color="default"
+                    size="small"
+                    onClick={() => filterTodoHandler(todo.username)}
+                  >
+                    {todo.username}
+                  </Button>
                 </Typography>
                 {todo.description}
               </React.Fragment>

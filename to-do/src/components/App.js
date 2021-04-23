@@ -21,10 +21,7 @@ export const App = () => {
   };
 
   const handleDeleteTodo = (todoID) =>
-    dispatch({
-      type: AppState.DELETE_TODO,
-      payload: todoID,
-    });
+    dispatch({ type: AppState.DELETE_TODO, payload: todoID });
 
   const handleCancelUpdate = () => dispatch({ type: AppState.CANCEL_EDIT });
 
