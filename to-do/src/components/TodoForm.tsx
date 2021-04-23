@@ -79,6 +79,7 @@ const TodoForm = ({
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
       <TextField
+        color="primary"
         value={formFields.title}
         label="Title"
         onChange={(e) => handleFormChange("title", e.target.value)}
@@ -87,6 +88,7 @@ const TodoForm = ({
       <FormControl variant="standard">
         <InputLabel id="demo-simple-select-standard-label">Username</InputLabel>
         <Select
+          color="primary"
           labelId="demo-simple-select-standard-label"
           value={formFields.username}
           onChange={(e: any) => handleFormChange("username", e.target.value)}
@@ -103,6 +105,7 @@ const TodoForm = ({
         </Select>
       </FormControl>
       <TextField
+        color="primary"
         value={formFields.profilePicture}
         label="Image Url"
         onChange={(e) => handleFormChange("profilePicture", e.target.value)}
