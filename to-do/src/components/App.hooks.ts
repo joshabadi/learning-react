@@ -46,7 +46,7 @@ export const appStateReducer = (
         todoFormIsVisible: true,
       };
     case CANCEL_EDIT:
-      return { ...state, editableTodoID: null };
+      return { ...state, editableTodoID: null, todoFormIsVisible: false };
     case UPDATE_TODO: {
       const updatedTodos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
