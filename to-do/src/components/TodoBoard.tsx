@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ITodo } from "../types/todo.types";
 import Todo from "./Todo";
+import List from "@material-ui/core/List";
 // import LoadMoreBtn from './loadMoreBtn.js'
 interface ITodoBoardProps {
   todos: Array<ITodo>;
@@ -32,7 +33,7 @@ const TodoBoard = ({
   // }
 
   return (
-    <section className="todo-board">
+    <List className="todo-board">
       {usernameFilter ? (
         <button className="back-btn" onClick={() => handleFilterTodos("")}>
           &larr;
@@ -78,7 +79,7 @@ const TodoBoard = ({
                 ):(
                     null
                 )} */}
-    </section>
+    </List>
   );
 };
 

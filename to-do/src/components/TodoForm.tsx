@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { ITodo } from "../types/todo.types";
 import { IUser } from "../types/user.types";
-import * as el from "./App.Styled";
-
-// { title, username, profilePicture, description } = this.state,
-// { users, cancelUpdateHandler } = this.props,
+import * as el from "../styles/App.Styled";
+// button imports
+import Button from "@material-ui/core/Button";
+import SaveIcon from "@material-ui/icons/Save";
+import AddIcon from "@material-ui/icons/Add";
+import CancelIcon from "@material-ui/icons/Cancel";
+// form imports
+import InputLabel from "@material-ui/core/InputLabel";
+import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 interface ITodoFormProps {
   users: Array<IUser>;
@@ -69,44 +77,63 @@ const TodoForm = ({
 
   return (
     <form className="todo-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="title"
+      <TextField
         value={formFields.title}
-        placeholder="Title"
+        label="Title"
         onChange={(e) => handleFormChange("title", e.target.value)}
+        variant="outlined"
       />
-      <select
-        name="username"
-        value={formFields.username}
-        onChange={(e) => handleFormChange("username", e.target.value)}
-      >
-        <option value="">Select user</option>
-        {users.map((user: any) => (
-          <option key={user.id} value={user.username}>
-            {user.username}
-          </option>
-        ))}
-      </select>
-      <input
-        type="text"
-        name="profile-picture"
+      <FormControl variant="outlined">
+        <InputLabel id="demo-simple-select-outlined-label">Username</InputLabel>
+        <Select
+          labelId="demo-simple-select-outlined-label"
+          value={formFields.username}
+          onChange={(e: any) => handleFormChange("username", e.target.value)}
+          label="Age"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {users.map((user: any) => (
+            <MenuItem key={user.id} value={user.username}>
+              {user.username}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <TextField
         value={formFields.profilePicture}
-        placeholder="Image url"
+        label="Image Url"
         onChange={(e) => handleFormChange("profilePicture", e.target.value)}
+        variant="outlined"
       />
-      <textarea
-        rows={5}
-        placeholder="Description"
+      <TextField
+        label="Description"
         value={formFields.description}
         onChange={(e) => handleFormChange("description", e.target.value)}
-      ></textarea>
+        variant="outlined"
+        multiline
+      />
       <div className="btn-container">
-        <el.PurpleButton type="submit" value={!isEdit ? "Add Todo" : "Save"} />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          startIcon={!isEdit ? <AddIcon /> : <SaveIcon />}
+          size="small"
+        >
+          {!isEdit ? "Add Todo" : "Save"}
+        </Button>
         {isEdit ? (
-          <button type="button" onClick={() => cancelUpdateHandler()}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => cancelUpdateHandler()}
+            startIcon={<CancelIcon />}
+            size="small"
+          >
             Cancel
-          </button>
+          </Button>
         ) : null}
       </div>
     </form>

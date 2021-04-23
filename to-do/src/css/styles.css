@@ -1,10 +1,11 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
 }
 
-button {
+/* button {
     cursor: pointer;
     margin-right: 5px;
     padding: 5px 10px;
@@ -23,99 +24,101 @@ button.delete-todo {
 
 button.edit-todo {
     background-color: rgb(89, 64, 119);
-}
+} */
 
 .capitalize {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .App {
-    display: flex;
+  display: flex;
 }
 
 .todo-board {
-    width: 60%;
-    margin: 20px 0;
-    padding-left: 20px;
+  width: 60%;
+  margin: 20px 0;
+  padding-left: 20px;
+  background-color: #fff;
 }
 
 .todo-board .todo {
-    padding: 15px;
-    background-color: #f4f6f8;
-    margin-bottom: 20px;
-    display: flex;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 15px;
+  background-color: #f4f6f8;
+  margin-bottom: 20px;
+  display: flex;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 .todo-board .todo .profile-picture {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .todo-board .todo h3 {
-    margin-top: 0;
-    margin-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .todo-board .todo span {
-    font-size: 11px;
+  font-size: 11px;
 }
 
-.todo-board button.username-btn {
-    color: rgb(89, 64, 119);
-    background: none;
-    padding: 0;
-    margin: 0;
-    display: inline;
-    cursor: pointer;
+/* .todo-board button.username-btn {
+  color: rgb(89, 64, 119);
+  background: none;
+  padding: 0;
+  margin: 0;
+  display: inline;
+  cursor: pointer;
 }
 
 .todo-board button.back-btn {
-    background-color: rgb(89, 64, 119);
-    color: #fff;
-    margin-bottom: 10px;
-    font-weight: bold;
-}
+  background-color: rgb(89, 64, 119);
+  color: #fff;
+  margin-bottom: 10px;
+  font-weight: bold;
+} */
 
-.todo-board .todo a:hover{
-    text-decoration: underline;
+.todo-board .todo a:hover {
+  text-decoration: underline;
 }
 
 .todo-board .todo p {
-    font-size: 14px;
+  font-size: 14px;
 }
 
-.todo-board .load-more-btn:hover {
-    background-color: rgb(109, 84, 140);
-}
+/* .todo-board .load-more-btn:hover {
+  background-color: rgb(109, 84, 140);
+} */
 
 .todo-form {
-    position: fixed;
-    right: 20px;
-    top: 20px;
-    width: 300px;
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  width: 300px;
 }
 
-.todo-form input[type='text'],
+/* .todo-form input[type="text"],
 .todo-form select,
 .todo-form textarea,
 .todo-form button {
-    background-color: #f4f6f8;
-    color: #000;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 300px;
-    box-sizing: border-box;
-    border: none;
-}
+  background-color: #f4f6f8;
+  color: #000;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 300px;
+  box-sizing: border-box;
+  border: none;
+} */
 
 .btn-container {
-    display: flex;
+  display: flex;
 }
 
-.btn-container button {
-    cursor: pointer;
-    margin-right: 0;
-    margin-bottom: 0;
-}
+/* .btn-container button {
+  cursor: pointer;
+  margin-right: 0;
+  margin-bottom: 0;
+} */
