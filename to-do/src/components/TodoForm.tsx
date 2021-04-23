@@ -128,15 +128,13 @@ const TodoForm = ({
           >
             {!isEdit ? "Add Todo" : "Save"}
           </Button>
-          {isEdit ? (
-            <Button
-              color="secondary"
-              onClick={() => cancelUpdateHandler()}
-              endIcon={<CancelIcon />}
-            >
-              Cancel
-            </Button>
-          ) : null}
+          <Button
+            color="secondary"
+            onClick={() => cancelUpdateHandler()}
+            endIcon={<CancelIcon />}
+          >
+            Cancel
+          </Button>
         </ButtonGroup>
       </div>
     </form>
