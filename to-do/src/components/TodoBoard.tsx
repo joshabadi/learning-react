@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ITodo } from "../types/todo.types";
 import Todo from "./Todo";
 import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
 // import LoadMoreBtn from './loadMoreBtn.js'
 interface ITodoBoardProps {
   todos: Array<ITodo>;
@@ -46,14 +47,17 @@ const TodoBoard = ({
         })
         .map((todo) => {
           return (
-            <Todo
-              key={todo.id}
-              todo={todo}
-              deleteTodoHandler={deleteTodoHandler}
-              setEditableTodoHandler={setEditableTodoHandler}
-              filterTodoHandler={handleFilterTodos}
-              isEdit={isEdit}
-            />
+            <React.Fragment>
+              <Todo
+                key={todo.id}
+                todo={todo}
+                deleteTodoHandler={deleteTodoHandler}
+                setEditableTodoHandler={setEditableTodoHandler}
+                filterTodoHandler={handleFilterTodos}
+                isEdit={isEdit}
+              />
+              <Divider variant="inset" component="li" />
+            </React.Fragment>
           );
           {
             /* if ( index <= maxTodosPerPage ) {

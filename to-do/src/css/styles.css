@@ -6,6 +6,12 @@ body {
   height: 100%;
 }
 
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 /* button {
     cursor: pointer;
     margin-right: 5px;
@@ -44,13 +50,15 @@ button.edit-todo {
   flex: 1;
 }
 
-.todo-board .todo {
-  padding: 15px;
-  background-color: #f4f6f8;
-  margin-bottom: 20px;
+.todo {
   display: flex;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.todo-content {
+  display: flex;
 }
 
 /* .todo-board button.username-btn {

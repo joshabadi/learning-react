@@ -10,12 +10,14 @@ export const Header = () => {
     <AppBar>
       <Toolbar>
         <Container maxWidth="sm">
-          <Typography>Todos</Typography>
-          <IconButton>
-            <Icon>
-              <AddIcon />
-            </Icon>
-          </IconButton>
+          <div className="header-toolbar">
+            <Typography>Todos</Typography>
+            <IconButton>
+              <Icon>
+                <AddIcon />
+              </Icon>
+            </IconButton>
+          </div>
         </Container>
       </Toolbar>
     </AppBar>

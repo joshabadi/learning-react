@@ -41,12 +41,12 @@ const Todo = ({
   };
 
   return (
-    <React.Fragment>
-      <ListItem alignItems="flex-start">
-        <ListItemAvatar>
-          <Avatar src={todo.profilePicture} alt={todo.profilePicture} />
-        </ListItemAvatar>
+    <ListItem alignItems="flex-start">
+      <div className="todo">
         <div className="todo-content">
+          <ListItemAvatar>
+            <Avatar src={todo.profilePicture} alt={todo.profilePicture} />
+          </ListItemAvatar>
           <ListItemText
             primary={todo.title}
             secondary={
@@ -110,9 +110,8 @@ const Todo = ({
             </Button>
           </MenuItem>
         </Menu>
-      </ListItem>
-      <Divider variant="inset" component="li" />
-    </React.Fragment>
+      </div>
+    </ListItem>
   );
 };
 
