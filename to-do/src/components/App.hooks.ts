@@ -38,6 +38,7 @@ export const appStateReducer = (
         ...state,
         todos: [action.payload, ...state.todos],
         editableTodoID: null,
+        todoFormIsVisible: false,
       };
     case SET_EDITABLE_TODO_ID:
       return {

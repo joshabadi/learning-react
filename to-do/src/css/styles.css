@@ -4,6 +4,7 @@ body {
   padding: 0;
   background-color: #f5f5f5;
   height: 100%;
+  overflow: hidden;
 }
 
 .header-toolbar {
@@ -12,42 +13,19 @@ body {
   align-items: center;
 }
 
-/* button {
-    cursor: pointer;
-    margin-right: 5px;
-    padding: 5px 10px;
-    color: #f4f6f8;
-    border: none;
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-button.delete-todo {
-    background-color: #b20020;
-}
-
-button.edit-todo {
-    background-color: rgb(89, 64, 119);
-} */
-
-.capitalize {
-  text-transform: capitalize;
-}
-
 .App {
   display: flex;
-  height: 100%;
+  height: calc(100vh - 65px);
   flex: 1;
   flex-direction: column-reverse;
-  margin: 60px auto 0 auto;
+  margin: 65px auto 0 auto;
 }
 
 .todo-board {
   background-color: #fff;
   flex: 1;
+  overflow: auto;
+  padding-top: 20px !important;
 }
 
 .todo {
@@ -81,46 +59,15 @@ button.edit-todo {
   text-decoration: underline;
 }
 
-/* .todo-board .load-more-btn:hover {
-  background-color: rgb(109, 84, 140);
-} */
-
 .todo-form {
   background-color: #fff;
   padding: 20px 15px 15px 15px;
-  /* position: flex; */
-  /* flex-direction: row; */
-  /* right: 20px; */
-  /* top: 20px; */
-  /* width: 300px; */
 }
 
 .MuiFormControl-root {
   width: 100%;
 }
 
-/* .todo-form input[type="text"],
-.todo-form select,
-.todo-form textarea,
-.todo-form button {
-  background-color: #f4f6f8;
-  color: #000;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-  padding: 10px;
-  width: 300px;
-  box-sizing: border-box;
-  border: none;
-} */
-
 .btn-container {
   margin-top: 10px;
-  /* display: flex; */
 }
-
-/* .btn-container button {
-  cursor: pointer;
-  margin-right: 0;
-  margin-bottom: 0;
-} */
