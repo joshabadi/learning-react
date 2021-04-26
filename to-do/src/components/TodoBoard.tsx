@@ -30,7 +30,7 @@ const TodoBoard = ({
   return (
     <el.TodoBoard>
       {usernameFilter ? (
-        <Button color="primary" onClick={() => handleFilterTodos("")}>
+        <Button color="default" onClick={() => handleFilterTodos("")}>
           &larr;
         </Button>
       ) : null}

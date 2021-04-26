@@ -3,7 +3,7 @@ import * as GlobalElements from "../styles/App.Styled";
 import * as el from "../styles/Header.Styled";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import { IconButton, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import Fab from "@material-ui/core/Fab";
@@ -15,13 +15,11 @@ export const Header = ({ toggleFormHandler, isTodoFormVisible }) => {
       <Toolbar>
         <GlobalElements.ContainerStyled maxWidth="sm">
           <el.HeaderToolbar>
-            <Typography>Todos</Typography>
+            <Typography>MyTodos</Typography>
             <Tooltip title={isTodoFormVisible ? "Cancel" : "Add"}>
-              <IconButton onClick={toggleFormHandler} size="small">
-                <Fab size="small" color="primary">
-                  {isTodoFormVisible ? <CloseIcon /> : <AddIcon />}
-                </Fab>
-              </IconButton>
+              <el.ActionButton onClick={toggleFormHandler}>
+                {isTodoFormVisible ? <CloseIcon /> : <AddIcon />}
+              </el.ActionButton>
             </Tooltip>
           </el.HeaderToolbar>
         </GlobalElements.ContainerStyled>

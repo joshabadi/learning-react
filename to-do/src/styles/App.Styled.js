@@ -11,7 +11,7 @@ export const MasterTheme = createMuiTheme({
   palette: {
     primary: {
       light: purple[500],
-      main: purple[900],
+      main: purple[700],
     },
     secondary: {
       light: orange[500],

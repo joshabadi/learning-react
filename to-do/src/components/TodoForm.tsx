@@ -10,9 +10,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 // form imports
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
 import { ButtonGroup } from "@material-ui/core";
 
 interface ITodoFormProps {
@@ -77,7 +75,7 @@ const TodoForm = ({
 
   return (
     <el.TodoForm onSubmit={handleSubmit}>
-      <TextField
+      <el.TextInput
         color="primary"
         value={formFields.title}
         label="Title"
@@ -86,7 +84,7 @@ const TodoForm = ({
         }
         variant="standard"
       />
-      <FormControl variant="standard">
+      <el.SelectDropdown variant="standard">
         <InputLabel id="demo-simple-select-standard-label">Username</InputLabel>
         <Select
           color="primary"
@@ -98,14 +96,14 @@ const TodoForm = ({
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {users.map((user: any) => (
+          {users.map((user: IUser) => (
             <MenuItem key={user.id} value={user.username}>
               {user.username}
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-      <TextField
+      </el.SelectDropdown>
+      <el.TextInput
         color="primary"
         value={formFields.profilePicture}
         label="Image Url"
@@ -114,7 +112,7 @@ const TodoForm = ({
         }
         variant="standard"
       />
-      <TextField
+      <el.TextInput
         label="Description"
         value={formFields.description}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

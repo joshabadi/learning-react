@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
 
 export const TodoForm = styled("form")`
   background-color: #fff;
@@ -7,7 +8,11 @@ export const TodoForm = styled("form")`
 `;
 
 export const TextInput = styled(TextField)`
-  display: none;
+  width: 100%;
+`;
+
+export const SelectDropdown = styled(FormControl)`
+  width: 100%;
 `;
 
 export const BtnContainer = styled("div")`
