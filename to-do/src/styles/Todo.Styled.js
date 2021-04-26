@@ -12,5 +12,5 @@ export const TodoContent = styled("div")`
 `;
 
 export const TodoDescription = styled("span")`
-  margin: 0;
+  display: block;
 `;
