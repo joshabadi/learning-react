@@ -26,7 +26,7 @@ export const ContainerStyled = styled(Container)`
   }
 `;
 
-export const App = styled("div")`
+export const App = styled.div`
   display: flex;
   height: calc(100vh - 65px);
   flex: 1;

@@ -5,7 +5,7 @@ export const ActionButton = styled(IconButton)`
   color: #fff;
 `;
 
-export const HeaderToolbar = styled("div")`
+export const HeaderToolbar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

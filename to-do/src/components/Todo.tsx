@@ -56,7 +56,7 @@ const Todo = ({
           <ListItemText
             primary={todo.title}
             secondary={
-              <React.Fragment>
+              <>
                 <Typography
                   component="span"
                   variant="body2"
@@ -74,7 +74,7 @@ const Todo = ({
                   </Button>
                 </Typography>
                 <el.TodoDescription>{todo.description}</el.TodoDescription>
-              </React.Fragment>
+              </>
             }
           />
         </el.TodoContent>
