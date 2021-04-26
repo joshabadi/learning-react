@@ -1,5 +1,6 @@
 import React from "react";
 import { ITodo } from "../types/todo.types";
+import * as el from "../styles/Todo.Styled";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -40,10 +41,15 @@ const Todo = ({
     setAnchorEl(null);
   };
 
+  const handleEdit = () => {
+    setEditableTodoHandler(todo.id);
+    handleClose();
+  };
+
   return (
     <ListItem alignItems="flex-start">
-      <div className="todo">
-        <div className="todo-content">
+      <el.Todo>
+        <el.TodoContent>
           <ListItemAvatar>
             <Avatar src={todo.profilePicture} alt={todo.profilePicture} />
           </ListItemAvatar>
@@ -60,18 +66,18 @@ const Todo = ({
                   Created by:{" "}
                   <Button
                     variant="text"
-                    color="default"
+                    color="primary"
                     size="small"
                     onClick={() => filterTodoHandler(todo.username)}
                   >
                     {todo.username}
                   </Button>
                 </Typography>
-                {todo.description}
+                <el.TodoDescription>{todo.description}</el.TodoDescription>
               </React.Fragment>
             }
           />
-        </div>
+        </el.TodoContent>
         <IconButton
           aria-label="more"
           aria-controls="long-menu"
@@ -87,7 +93,7 @@ const Todo = ({
           open={open}
           onClose={handleClose}
         >
-          <MenuItem onClick={() => setEditableTodoHandler(todo.id)}>
+          <MenuItem onClick={() => handleEdit()}>
             <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
@@ -105,7 +111,7 @@ const Todo = ({
             </ListItemText>
           </MenuItem>
         </Menu>
-      </div>
+      </el.Todo>
     </ListItem>
   );
 };

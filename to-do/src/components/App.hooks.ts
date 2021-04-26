@@ -52,14 +52,19 @@ export const appStateReducer = (
       const updatedTodos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
       );
-      return { ...state, todos: [...updatedTodos], editableTodoID: null };
+      return {
+        ...state,
+        todos: [...updatedTodos],
+        editableTodoID: null,
+        todoFormIsVisible: false,
+      };
     }
     case DELETE_TODO: {
       const updatedTodos = state.todos.filter(
         (value) => value.id !== action.payload
       );
 
-      return { ...state, todos: [...updatedTodos] };
+      return { ...state, todos: [...updatedTodos], todoFormIsVisible: false };
     }
     case TOGGLE_TODO_FORM: {
       return {

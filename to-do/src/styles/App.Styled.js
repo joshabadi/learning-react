@@ -1,8 +1,11 @@
-import React from "react";
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import styled from "styled-components";
+
+// theme definitions
 import purple from "@material-ui/core/colors/purple";
 import orange from "@material-ui/core/colors/orange";
-import styled from "styled-components";
+
+import Container from "@material-ui/core/Container";
 
 export const MasterTheme = createMuiTheme({
   palette: {
@@ -16,6 +19,24 @@ export const MasterTheme = createMuiTheme({
     },
   },
 });
+
+export const ContainerStyled = styled(Container)`
+  @media (max-width: 600px) {
+    padding: 0;
+  }
+`;
+
+export const App = styled("div")`
+  display: flex;
+  height: calc(100vh - 65px);
+  flex: 1;
+  flex-direction: column-reverse;
+  margin: 65px auto 0 auto;
+  @media (max-width: 600px) {
+    margin-top: 55px;
+    height: calc(100vh - 55px);
+  }
+`;
 
 export const PurpleButton = styled.input`
   background-color: rgb(89, 64, 119);

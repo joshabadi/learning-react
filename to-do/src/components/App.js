@@ -1,11 +1,10 @@
 import React, { useReducer } from "react";
 import * as AppState from "./App.hooks";
 import { ThemeProvider } from "@material-ui/core/styles";
-import * as StyledElements from "../styles/App.Styled";
+import * as GlobalElements from "../styles/App.Styled";
 import { Header } from "./Header";
 import TodoForm from "./TodoForm";
 import TodoBoard from "./TodoBoard";
-import Container from "@material-ui/core/Container";
 import "fontsource-roboto";
 
 export const App = () => {
@@ -44,13 +43,13 @@ export const App = () => {
   };
 
   return (
-    <ThemeProvider theme={StyledElements.MasterTheme}>
+    <ThemeProvider theme={GlobalElements.MasterTheme}>
       <Header
         toggleFormHandler={handleToggleForm}
-        isVisible={state.todoFormIsVisible}
+        isTodoFormVisible={state.todoFormIsVisible}
       />
-      <Container maxWidth="sm">
-        <div className="App">
+      <GlobalElements.ContainerStyled maxWidth="sm">
+        <GlobalElements.App>
           <TodoBoard
             todos={state.todos}
             deleteTodoHandler={handleDeleteTodo}
@@ -66,8 +65,8 @@ export const App = () => {
               cancelUpdateHandler={handleCancelUpdate}
             />
           ) : null}
-        </div>
-      </Container>
+        </GlobalElements.App>
+      </GlobalElements.ContainerStyled>
     </ThemeProvider>
   );
 };

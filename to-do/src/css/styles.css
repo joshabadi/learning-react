@@ -7,67 +7,6 @@ body {
   overflow: hidden;
 }
 
-.header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.App {
-  display: flex;
-  height: calc(100vh - 65px);
-  flex: 1;
-  flex-direction: column-reverse;
-  margin: 65px auto 0 auto;
-}
-
-.todo-board {
-  background-color: #fff;
-  flex: 1;
-  overflow: auto;
-  padding-top: 20px !important;
-}
-
-.todo {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.todo-content {
-  display: flex;
-}
-
-/* .todo-board button.username-btn {
-  color: rgb(89, 64, 119);
-  background: none;
-  padding: 0;
-  margin: 0;
-  display: inline;
-  cursor: pointer;
-}
-
-.todo-board button.back-btn {
-  background-color: rgb(89, 64, 119);
-  color: #fff;
-  margin-bottom: 10px;
-  font-weight: bold;
-} */
-
-.todo-board .todo a:hover {
-  text-decoration: underline;
-}
-
-.todo-form {
-  background-color: #fff;
-  padding: 20px 15px 15px 15px;
-}
-
 .MuiFormControl-root {
   width: 100%;
-}
-
-.btn-container {
-  margin-top: 10px;
 }

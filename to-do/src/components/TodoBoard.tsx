@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import { ITodo } from "../types/todo.types";
+import * as el from "../styles/TodoBoard.Styled";
 import Todo from "./Todo";
-import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
-// import LoadMoreBtn from './loadMoreBtn.js'
+import Button from "@material-ui/core/Button";
 interface ITodoBoardProps {
   todos: Array<ITodo>;
   deleteTodoHandler: () => void;
   setEditableTodoHandler: () => void;
   isEdit: boolean;
-  isVisible: boolean;
 }
 
 interface ITodoBoardState {
@@ -21,7 +20,6 @@ const TodoBoard = ({
   deleteTodoHandler,
   setEditableTodoHandler,
   isEdit,
-  isVisible,
 }: ITodoBoardProps) => {
   const [usernameFilter, setUsernameFilter] = useState("");
 
@@ -29,17 +27,12 @@ const TodoBoard = ({
     setUsernameFilter(username);
   };
 
-  // const loadMore = () => {
-  //     const currentState = {...this.state};
-  //     currentState['page'] = currentState['page'] + 1;
-  //     this.setState(currentState);
-  // }
   return (
-    <List className="todo-board">
+    <el.TodoBoard>
       {usernameFilter ? (
-        <button className="back-btn" onClick={() => handleFilterTodos("")}>
+        <Button color="primary" onClick={() => handleFilterTodos("")}>
           &larr;
-        </button>
+        </Button>
       ) : null}
 
       {todos
@@ -62,31 +55,8 @@ const TodoBoard = ({
               ) : null}
             </React.Fragment>
           );
-          {
-            /* if ( index <= maxTodosPerPage ) {
-                        return(
-                            <Todo
-                                key = {todo.id}
-                                todo = {todo}
-                                todoId = {index}
-                                deleteTodo = {this.props.deleteTodo}
-                                editTodo = {this.props.editTodo}
-                                filterTodos = {this.filterTodos}
-                                isEdit = {this.props.isEdit}
-                            />
-                        )
-                    } else {
-                        return ( null );
-                    } */
-          }
         })}
-
-      {/* {maxTodosPerPage < todos.length ? (
-                    <LoadMoreBtn action={this.loadMore} />
-                ):(
-                    null
-                )} */}
-    </List>
+    </el.TodoBoard>
   );
 };
 

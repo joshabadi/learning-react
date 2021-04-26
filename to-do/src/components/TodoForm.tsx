@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ITodo } from "../types/todo.types";
 import { IUser } from "../types/user.types";
-import * as el from "../styles/App.Styled";
+import * as el from "../styles/TodoForm.Styled";
 // button imports
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
@@ -9,10 +9,10 @@ import AddIcon from "@material-ui/icons/Add";
 import CancelIcon from "@material-ui/icons/Cancel";
 // form imports
 import InputLabel from "@material-ui/core/InputLabel";
-import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import TextField from "@material-ui/core/TextField";
 import { ButtonGroup } from "@material-ui/core";
 
 interface ITodoFormProps {
@@ -46,8 +46,6 @@ const TodoForm = ({
 
   const [formFields, setFormFields] = useState<ITodo>({ ...defaultFormState });
 
-  const [isVisible, toggleIsVisible] = useState(false);
-
   const handleFormChange = (field: any, value: any) => {
     setFormFields({
       ...formFields,
@@ -78,12 +76,14 @@ const TodoForm = ({
   const isEdit = Boolean(editableTodo);
 
   return (
-    <form className="todo-form" onSubmit={handleSubmit}>
+    <el.TodoForm onSubmit={handleSubmit}>
       <TextField
         color="primary"
         value={formFields.title}
         label="Title"
-        onChange={(e) => handleFormChange("title", e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleFormChange("title", e.target.value)
+        }
         variant="standard"
       />
       <FormControl variant="standard">
@@ -92,7 +92,7 @@ const TodoForm = ({
           color="primary"
           labelId="demo-simple-select-standard-label"
           value={formFields.username}
-          onChange={(e: any) => handleFormChange("username", e.target.value)}
+          onChange={(e) => handleFormChange("username", e.target.value)}
           label="Age"
         >
           <MenuItem value="">
@@ -109,17 +109,21 @@ const TodoForm = ({
         color="primary"
         value={formFields.profilePicture}
         label="Image Url"
-        onChange={(e) => handleFormChange("profilePicture", e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleFormChange("profilePicture", e.target.value)
+        }
         variant="standard"
       />
       <TextField
         label="Description"
         value={formFields.description}
-        onChange={(e) => handleFormChange("description", e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          handleFormChange("description", e.target.value)
+        }
         variant="standard"
         multiline
       />
-      <div className="btn-container">
+      <el.BtnContainer>
         <ButtonGroup variant="contained" size="small">
           <Button
             type="submit"
@@ -136,8 +140,8 @@ const TodoForm = ({
             Cancel
           </Button>
         </ButtonGroup>
-      </div>
-    </form>
+      </el.BtnContainer>
+    </el.TodoForm>
   );
 };
 
