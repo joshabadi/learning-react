@@ -41,9 +41,8 @@ const TodoBoard = ({
         })
         .map((todo, index) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={todo.id}>
               <Todo
-                key={todo.id}
                 todo={todo}
                 deleteTodoHandler={deleteTodoHandler}
                 setEditableTodoHandler={setEditableTodoHandler}

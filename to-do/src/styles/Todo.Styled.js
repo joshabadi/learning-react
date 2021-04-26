@@ -11,6 +11,6 @@ export const TodoContent = styled("div")`
   display: flex;
 `;
 
-export const TodoDescription = styled("p")`
+export const TodoDescription = styled("span")`
   margin: 0;
 `;

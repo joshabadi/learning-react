@@ -6,7 +6,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import Fab from "@material-ui/core/Fab";
 import Tooltip from "@material-ui/core/Tooltip";
 
 export const Header = ({ toggleFormHandler, isTodoFormVisible }) => {

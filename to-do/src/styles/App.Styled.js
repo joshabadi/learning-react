@@ -1,4 +1,4 @@
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme } from "@material-ui/core/styles";
 import styled from "styled-components";
 
 // theme definitions

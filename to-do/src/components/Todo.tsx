@@ -83,6 +83,7 @@ const Todo = ({
           aria-controls="long-menu"
           aria-haspopup="true"
           onClick={handleClick}
+          disabled={isEdit}
         >
           <MoreVertIcon />
         </IconButton>
