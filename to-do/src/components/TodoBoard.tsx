@@ -11,17 +11,13 @@ interface ITodoBoardProps {
   isEdit: boolean;
 }
 
-interface ITodoBoardState {
-  usernameFilter: string;
-}
-
 const TodoBoard = ({
   todos,
   deleteTodoHandler,
   setEditableTodoHandler,
   isEdit,
 }: ITodoBoardProps) => {
-  const [usernameFilter, setUsernameFilter] = useState("");
+  const [usernameFilter, setUsernameFilter] = useState<string>("");
 
   const handleFilterTodos = (username: string) => {
     setUsernameFilter(username);
