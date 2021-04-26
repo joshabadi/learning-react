@@ -1,71 +1,74 @@
-import React, { Component } from "react";
-import { todoData, userData } from "../sampleData.js";
-import TodoForm from "./TodoForm.js";
-import TodoBoard from "./TodoBoard.js";
+import React, { useReducer } from "react";
+import * as AppState from "./App.hooks";
+import { ThemeProvider } from "@material-ui/core/styles";
+import * as GlobalElements from "../styles/App.Styled";
+import { Header } from "./Header";
+import TodoForm from "./TodoForm";
+import TodoBoard from "./TodoBoard";
+import "fontsource-roboto";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: todoData,
-      users: userData,
-      editableTodoID: null,
-    };
-  }
-  handleCreateTodo = (todo) => {
-    this.setState(
-      {
-        todos: [todo, ...this.state.todos],
-      },
-      () => this.handleCancelUpdate()
-    );
+export const App = () => {
+  const [state, dispatch] = useReducer(
+    AppState.appStateReducer,
+    AppState.InitialAppState
+  );
+
+  const handleCreateTodo = (todo) => {
+    dispatch({ type: AppState.CREATE_TODO, payload: todo });
   };
-  handleUpdateTodo = (updatedTodo) => {
-    this.setState({
-      todos: this.state.todos.map((todo) =>
-        todo.id === updatedTodo.id ? updatedTodo : todo
-      ),
-      editableTodoID: null,
-    });
-  };
-  handleDeleteTodo = (todoId) => {
-    this.setState({
-      todos: this.state.todos.filter((value) => value.id !== todoId),
-    });
-  };
-  handleCancelUpdate = () => {
-    this.setState({
-      editableTodoID: null,
+
+  const handleUpdateTodo = (updatedTodo) => {
+    dispatch({
+      type: AppState.UPDATE_TODO,
+      payload: updatedTodo,
     });
   };
 
-  handleGetEditableTodo = () =>
-    this.state.todos.filter((todo) => todo.id === this.state.editableTodoID)[0];
+  const handleDeleteTodo = (todoID) =>
+    dispatch({ type: AppState.DELETE_TODO, payload: todoID });
 
-  handleSetEditableTodo = (todoId) => {
-    this.setState({
-      editableTodoID: todoId,
+  const handleCancelUpdate = () => dispatch({ type: AppState.CANCEL_EDIT });
+
+  const handleGetEditableTodo = () =>
+    state.todos.filter((todo) => todo.id === state.editableTodoID)[0];
+
+  const handleSetEditableTodo = (todoId) =>
+    dispatch({ type: AppState.SET_EDITABLE_TODO_ID, payload: todoId });
+
+  const handleToggleForm = () => {
+    dispatch({
+      type: AppState.TOGGLE_TODO_FORM,
+      payload: !state.todoFormIsVisible,
     });
   };
-  render({ todos, users, editableTodoID } = this.state) {
-    return (
-      <div className="App">
-        <TodoBoard
-          todos={todos}
-          deleteTodoHandler={this.handleDeleteTodo}
-          setEditableTodoHandler={this.handleSetEditableTodo}
-          isEdit={editableTodoID !== null}
-        />
-        <TodoForm
-          users={users}
-          createTodoHandler={this.handleCreateTodo}
-          updateTodoHandler={this.handleUpdateTodo}
-          editableTodo={this.handleGetEditableTodo()}
-          cancelUpdateHandler={this.handleCancelUpdate}
-        />
-      </div>
-    );
-  }
-}
+
+  return (
+    <ThemeProvider theme={GlobalElements.MasterTheme}>
+      <Header
+        toggleFormHandler={handleToggleForm}
+        isTodoFormVisible={state.todoFormIsVisible}
+      />
+      <GlobalElements.ContainerStyled maxWidth="sm">
+        <GlobalElements.App>
+          <TodoBoard
+            todos={state.todos}
+            deleteTodoHandler={handleDeleteTodo}
+            setEditableTodoHandler={handleSetEditableTodo}
+            isEdit={state.editableTodoID !== null}
+          />
+          {state.todoFormIsVisible ? (
+            <TodoForm
+              users={state.users}
+              createTodoHandler={handleCreateTodo}
+              updateTodoHandler={handleUpdateTodo}
+              editableTodo={handleGetEditableTodo()}
+              cancelUpdateHandler={handleCancelUpdate}
+            />
+          ) : null}
+        </GlobalElements.App>
+      </GlobalElements.ContainerStyled>
+    </ThemeProvider>
+  );
+};
 
 export default App;
