@@ -14,6 +14,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 interface ITodoProps {
   todo: ITodo;
@@ -31,19 +36,29 @@ const Todo = ({
   isEdit,
 }: ITodoProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const menuOpened = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleCloseMenu = () => {
     setAnchorEl(null);
   };
 
   const handleEdit = () => {
     setEditableTodoHandler(todo.id);
-    handleClose();
+    handleCloseMenu();
+  };
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    handleCloseMenu();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -82,7 +97,7 @@ const Todo = ({
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
-          onClick={handleClick}
+          onClick={handleMenuClick}
           disabled={isEdit}
         >
           <MoreVertIcon />
@@ -91,8 +106,8 @@ const Todo = ({
           id="long-menu"
           anchorEl={anchorEl}
           keepMounted
-          open={open}
-          onClose={handleClose}
+          open={menuOpened}
+          onClose={handleCloseMenu}
         >
           <MenuItem onClick={() => handleEdit()}>
             <ListItemIcon>
@@ -100,10 +115,7 @@ const Todo = ({
             </ListItemIcon>
             <ListItemText primary="Edit" />
           </MenuItem>
-          <MenuItem
-            color="secondary"
-            onClick={() => deleteTodoHandler(todo.id)}
-          >
+          <MenuItem color="secondary" onClick={handleOpenModal}>
             <ListItemIcon>
               <DeleteIcon color="secondary" fontSize="small" />
             </ListItemIcon>
@@ -113,6 +125,31 @@ const Todo = ({
           </MenuItem>
         </Menu>
       </el.Todo>
+      <Dialog
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete Todo?</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete the following todo?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => deleteTodoHandler(todo.id)}
+            color="primary"
+            autoFocus
+          >
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ListItem>
   );
 };
