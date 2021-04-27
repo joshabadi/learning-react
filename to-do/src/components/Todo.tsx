@@ -14,11 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 interface ITodoProps {
   todo: ITodo;
@@ -125,31 +121,12 @@ const Todo = ({
           </MenuItem>
         </Menu>
       </el.Todo>
-      <Dialog
-        open={isModalOpen}
-        onClose={handleCloseModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">Delete Todo?</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete the following todo?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal} color="primary">
-            Cancel
-          </Button>
-          <Button
-            onClick={() => deleteTodoHandler(todo.id)}
-            color="primary"
-            autoFocus
-          >
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <ConfirmationModal
+        isModalOpen={isModalOpen}
+        todo={todo}
+        closeModalHandler={handleCloseModal}
+        deleteTodoHandler={deleteTodoHandler}
+      />
     </ListItem>
   );
 };
