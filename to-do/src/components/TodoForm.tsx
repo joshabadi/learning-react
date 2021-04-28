@@ -119,13 +119,14 @@ const TodoForm = ({
         name="username"
         defaultValue=""
         render={({ field }) => (
-          <el.SelectDropdown error={!!errors?.username} variant="standard">
+          <el.SelectDropdown variant="standard">
             <InputLabel id="username-label">Username</InputLabel>
             <Select
               {...field}
               color="primary"
               labelId="username-label"
               label="username"
+              error={!!errors?.username}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -136,9 +137,9 @@ const TodoForm = ({
                 </MenuItem>
               ))}
             </Select>
-            {errors?.username ? (
+            {errors?.username && (
               <FormHelperText>{errors?.username?.message}</FormHelperText>
-            ) : null}
+            )}
           </el.SelectDropdown>
         )}
       />
