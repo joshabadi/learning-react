@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { ITodo } from "../types/todo.types";
 import { IUser } from "../types/user.types";
 import * as el from "../styles/TodoForm.Styled";
@@ -67,14 +67,10 @@ const TodoForm = ({
 
   const handleResetTodoForm = () => reset({ ...defaultFormState });
 
-  const isEdit = Boolean(editableTodo);
-
   const {
     control,
     handleSubmit,
-    watch,
     reset,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: defaultFormState,
@@ -96,6 +92,8 @@ const TodoForm = ({
 
     handleResetTodoForm();
   };
+
+  const isEdit = Boolean(editableTodo);
 
   return (
     <el.TodoForm onSubmit={handleSubmit(handleCreateOrUpdateTodo)}>
@@ -119,14 +117,13 @@ const TodoForm = ({
         name="username"
         defaultValue=""
         render={({ field }) => (
-          <el.SelectDropdown variant="standard">
+          <el.SelectDropdown error={!!errors?.username} variant="standard">
             <InputLabel id="username-label">Username</InputLabel>
             <Select
               {...field}
               color="primary"
               labelId="username-label"
               label="username"
-              error={!!errors?.username}
             >
               <MenuItem value="">
                 <em>None</em>

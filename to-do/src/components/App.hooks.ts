@@ -18,7 +18,7 @@ export const InitialAppState: IAppState = {
   todos: todoData,
   users: userData,
   editableTodoID: null,
-  todoFormIsVisible: true,
+  todoFormIsVisible: false,
 };
 
 export const CREATE_TODO = "CREATE_TODO";
