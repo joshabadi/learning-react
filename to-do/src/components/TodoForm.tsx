@@ -13,6 +13,10 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import { ButtonGroup } from "@material-ui/core";
 
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 interface ITodoFormProps {
   users: Array<IUser>;
   cancelUpdateHandler: () => void;
@@ -29,6 +33,26 @@ const defaultFormState: ITodo = {
   description: "",
 };
 
+const schema = yup.object().shape({
+  title: yup
+    .string()
+    .min(5, "Title is too short")
+    .max(50, "Title is too long")
+    .required(),
+  username: yup.string().required("Username is required"),
+  profilePicture: yup
+    .string()
+    .matches(
+      /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+      "Please enter a valid URL"
+    ),
+  description: yup
+    .string()
+    .min(5, "Description is too short")
+    .max(255, "Description is too long")
+    .required("Please enter a description"),
+});
+
 const TodoForm = ({
   users,
   cancelUpdateHandler,
@@ -37,33 +61,34 @@ const TodoForm = ({
   createTodoHandler,
 }: ITodoFormProps) => {
   useEffect(() => {
-    editableTodo
-      ? setFormFields({ ...editableTodo })
-      : setFormFields({ ...defaultFormState });
+    editableTodo ? reset({ ...editableTodo }) : reset({ ...defaultFormState });
   }, [editableTodo, editableTodo?.id]);
 
-  const [formFields, setFormFields] = useState<ITodo>({ ...defaultFormState });
+  const handleResetTodoForm = () => reset({ ...defaultFormState });
 
-  const handleFormChange = (field: any, value: any) => {
-    setFormFields({
-      ...formFields,
-      [field]: value,
-    });
-  };
+  const isEdit = Boolean(editableTodo);
 
-  const handleResetTodoForm = () => setFormFields({ ...defaultFormState });
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: defaultFormState,
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    // BONUS: Look up React Event types
-    e.preventDefault();
-
+  const handleCreateOrUpdateTodo = (data: ITodo) => {
     if (editableTodo) {
       updateTodoHandler({
-        ...formFields,
+        ...data,
       });
     } else {
       createTodoHandler({
-        ...formFields,
+        ...data,
         id: Date.now(),
       });
     }
@@ -71,57 +96,81 @@ const TodoForm = ({
     handleResetTodoForm();
   };
 
-  const isEdit = Boolean(editableTodo);
-
   return (
-    <el.TodoForm onSubmit={handleSubmit}>
-      <el.TextInput
-        color="primary"
-        value={formFields.title}
-        label="Title"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleFormChange("title", e.target.value)
-        }
-        variant="standard"
+    <el.TodoForm onSubmit={handleSubmit(handleCreateOrUpdateTodo)}>
+      <Controller
+        control={control}
+        name="title"
+        defaultValue=""
+        render={({ field }) => (
+          <el.TextInput
+            {...field}
+            label="Title"
+            color="primary"
+            variant="standard"
+            error={!!errors?.title}
+            helperText={errors?.title?.message}
+          />
+        )}
       />
-      <el.SelectDropdown variant="standard">
-        <InputLabel id="demo-simple-select-standard-label">Username</InputLabel>
-        <Select
-          color="primary"
-          labelId="demo-simple-select-standard-label"
-          value={formFields.username}
-          onChange={(e: React.ChangeEvent<{ value: unknown }>) =>
-            handleFormChange("username", e.target.value)
-          }
-          label="Age"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {users.map((user: IUser) => (
-            <MenuItem key={user.id} value={user.username}>
-              {user.username}
-            </MenuItem>
-          ))}
-        </Select>
-      </el.SelectDropdown>
-      <el.TextInput
-        color="primary"
-        value={formFields.profilePicture}
-        label="Image Url"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleFormChange("profilePicture", e.target.value)
-        }
-        variant="standard"
+      <Controller
+        control={control}
+        name="username"
+        defaultValue=""
+        render={({ field }) => (
+          <el.SelectDropdown
+            error={!!errors?.username}
+            helperText={errors?.username?.message}
+            variant="standard"
+          >
+            <InputLabel id="username-label">Username</InputLabel>
+            <Select
+              {...field}
+              color="primary"
+              labelId="username-label"
+              label="username"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {users.map((user: IUser) => (
+                <MenuItem key={user.id} value={user.username}>
+                  {user.username}
+                </MenuItem>
+              ))}
+            </Select>
+          </el.SelectDropdown>
+        )}
       />
-      <el.TextInput
-        label="Description"
-        value={formFields.description}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          handleFormChange("description", e.target.value)
-        }
-        variant="standard"
-        multiline
+      <Controller
+        control={control}
+        name="profilePicture"
+        defaultValue=""
+        render={({ field }) => (
+          <el.TextInput
+            {...field}
+            label="Image Url"
+            color="primary"
+            variant="standard"
+            error={!!errors?.profilePicture}
+            helperText={errors?.profilePicture?.message}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name="description"
+        defaultValue=""
+        render={({ field }) => (
+          <el.TextInput
+            {...field}
+            label="Description"
+            variant="standard"
+            error={!!errors?.description}
+            helperText={errors?.description?.message}
+            multiline
+          />
+        )}
       />
       <el.BtnContainer>
         <ButtonGroup variant="contained" size="small">
