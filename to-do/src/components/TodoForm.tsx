@@ -11,6 +11,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import { ButtonGroup } from "@material-ui/core";
 
 import { Controller, useForm } from "react-hook-form";
@@ -118,11 +119,7 @@ const TodoForm = ({
         name="username"
         defaultValue=""
         render={({ field }) => (
-          <el.SelectDropdown
-            error={!!errors?.username}
-            helperText={errors?.username?.message}
-            variant="standard"
-          >
+          <el.SelectDropdown error={!!errors?.username} variant="standard">
             <InputLabel id="username-label">Username</InputLabel>
             <Select
               {...field}
@@ -139,6 +136,9 @@ const TodoForm = ({
                 </MenuItem>
               ))}
             </Select>
+            {errors?.username ? (
+              <FormHelperText>{errors?.username?.message}</FormHelperText>
+            ) : null}
           </el.SelectDropdown>
         )}
       />
