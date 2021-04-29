@@ -25,14 +25,11 @@ const TodoBoard = ({
 
   const pageLength = 10;
   const maxTodos = pageLength * currentPage;
-  /* reason I created a new variable for filtered todos instead of just outputting them 
-  inside the render function is because I need the count for the filtered todos for the 
-  load more button. Otherwise I will need to write out a second todos.filter and get the length
-  of that */
-  const filteredTodos = todos.filter((todo) => {
+
+  const filteredTodosByUser = todos.filter((todo) => {
     return todo.username.includes(usernameFilter);
   });
-  const todoCount = filteredTodos.length;
+  const todoCount = filteredTodosByUser.length;
 
   const handleFilterTodos = (username: string) => {
     setUsernameFilter(username);
@@ -41,13 +38,12 @@ const TodoBoard = ({
   return (
     <el.TodoBoard>
       {usernameFilter ? (
-        <Button color="default" onClick={() => handleFilterTodos("")}>
-          &larr;
-        </Button>
+        <Button onClick={() => handleFilterTodos("")}>&larr;</Button>
       ) : null}
 
-      {filteredTodos.map((todo, index) => {
-        if (index < maxTodos) {
+      {filteredTodosByUser
+        .filter((todo, index) => index < maxTodos)
+        .map((todo, index) => {
           return (
             <React.Fragment key={todo.id}>
               <Todo
@@ -58,15 +54,12 @@ const TodoBoard = ({
                 isEdit={isEdit}
                 toggleModalHandler={setIsModalOpen}
               />
-              {index < todos.length - 1 ? (
+              {index < maxTodos - 1 && (
                 <Divider variant="inset" component="li" />
-              ) : null}
+              )}
             </React.Fragment>
           );
-        } else {
-          return null;
-        }
-      })}
+        })}
 
       {maxTodos < todoCount ? (
         <el.ButtonContainer>
