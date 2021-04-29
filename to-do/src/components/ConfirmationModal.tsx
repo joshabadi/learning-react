@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-interface IConfirmationModal {
+interface IConfirmationModalProps {
   isModalOpen: boolean;
   todo: ITodo;
   closeModalHandler: () => void;
@@ -19,7 +19,7 @@ export const ConfirmationModal = ({
   todo,
   closeModalHandler,
   deleteTodoHandler,
-}: IConfirmationModal) => {
+}: IConfirmationModalProps) => {
   return (
     <Dialog
       open={isModalOpen}

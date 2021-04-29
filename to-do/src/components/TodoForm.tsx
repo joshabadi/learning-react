@@ -78,7 +78,7 @@ const TodoForm = ({
     resolver: yupResolver(schema),
   });
 
-  const handleCreateOrUpdateTodo = (data: ITodo) => {
+  const submitTodo = (data: ITodo) => {
     if (editableTodo) {
       updateTodoHandler({
         ...data,
@@ -96,7 +96,7 @@ const TodoForm = ({
   const isEdit = Boolean(editableTodo);
 
   return (
-    <el.TodoForm onSubmit={handleSubmit(handleCreateOrUpdateTodo)}>
+    <el.TodoForm onSubmit={handleSubmit(submitTodo)}>
       <Controller
         control={control}
         name="title"
