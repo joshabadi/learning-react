@@ -10,25 +10,25 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface IConfirmationModalProps {
   isModalOpen: boolean;
   todoID: number | null;
-  closeModalHandler: () => void;
+  toggleModalHandler: (arg0: boolean) => void;
   deleteTodoHandler: (id: number | null) => void;
 }
 
 export const ConfirmationModal = ({
   isModalOpen,
   todoID,
-  closeModalHandler,
+  toggleModalHandler,
   deleteTodoHandler,
 }: IConfirmationModalProps) => {
   const handleDeleteTodo = (todoID: number | null) => {
     deleteTodoHandler(todoID);
-    closeModalHandler();
+    toggleModalHandler(false);
   };
 
   return (
     <Dialog
       open={isModalOpen}
-      onClose={closeModalHandler}
+      onClose={() => toggleModalHandler(false)}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -39,7 +39,7 @@ export const ConfirmationModal = ({
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={closeModalHandler} color="primary">
+        <Button onClick={() => toggleModalHandler(false)} color="primary">
           Cancel
         </Button>
         <Button

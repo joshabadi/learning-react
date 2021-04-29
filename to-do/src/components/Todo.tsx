@@ -20,7 +20,7 @@ interface ITodoProps {
   filterTodoHandler: (username: string) => void;
   setDeletableTodoHandler: (id: number | null) => void;
   setEditableTodoHandler: (id: number | null) => void;
-  openModalHandler: () => void;
+  toggleModalHandler: (arg0: boolean) => void;
   isEdit: boolean;
 }
 
@@ -30,7 +30,7 @@ const Todo = ({
   setDeletableTodoHandler,
   setEditableTodoHandler,
   isEdit,
-  openModalHandler,
+  toggleModalHandler,
 }: ITodoProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const menuOpened = Boolean(anchorEl);
@@ -49,7 +49,7 @@ const Todo = ({
   };
 
   const handleModaInitialization = (todoID: number | null) => {
-    openModalHandler();
+    toggleModalHandler(true);
     setDeletableTodoHandler(todoID);
     handleCloseMenu();
   };

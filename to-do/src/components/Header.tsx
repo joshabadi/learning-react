@@ -8,7 +8,15 @@ import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import Tooltip from "@material-ui/core/Tooltip";
 
-export const Header = ({ toggleFormHandler, isTodoFormVisible }) => {
+interface IHeaderProps {
+  toggleFormHandler: () => void;
+  isTodoFormVisible: boolean;
+}
+
+export const Header = ({
+  toggleFormHandler,
+  isTodoFormVisible,
+}: IHeaderProps) => {
   return (
     <AppBar>
       <Toolbar>

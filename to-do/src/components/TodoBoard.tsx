@@ -27,14 +27,6 @@ const TodoBoard = ({
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <el.TodoBoard>
       {usernameFilter ? (
@@ -56,7 +48,7 @@ const TodoBoard = ({
                 setEditableTodoHandler={setEditableTodoHandler}
                 filterTodoHandler={handleFilterTodos}
                 isEdit={isEdit}
-                openModalHandler={handleOpenModal}
+                toggleModalHandler={setIsModalOpen}
               />
               {index < todos.length - 1 ? (
                 <Divider variant="inset" component="li" />
@@ -67,7 +59,7 @@ const TodoBoard = ({
       <ConfirmationModal
         isModalOpen={isModalOpen}
         todoID={deletableTodo}
-        closeModalHandler={handleCloseModal}
+        toggleModalHandler={setIsModalOpen}
         deleteTodoHandler={deleteTodoHandler}
       />
     </el.TodoBoard>

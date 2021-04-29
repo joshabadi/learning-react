@@ -2,7 +2,7 @@ import React, { useReducer } from "react";
 import * as AppState from "./App.hooks";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as GlobalElements from "../styles/App.Styled";
-import { Header } from "./Header";
+import { Header } from "./Header.tsx";
 import TodoForm from "./TodoForm";
 import TodoBoard from "./TodoBoard";
 import "fontsource-roboto";

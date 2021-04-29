@@ -1,4 +1,4 @@
-import { todoData, userData } from "../sampleData.js";
+import { todoData, userData } from "../sampleData";
 import { ITodo } from "../types/todo.types";
 import { IUser } from "../types/user.types";
 
