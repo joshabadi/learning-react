@@ -14,25 +14,25 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { ConfirmationModal } from "./ConfirmationModal";
 
 interface ITodoProps {
   todo: ITodo;
   filterTodoHandler: (username: string) => void;
-  deleteTodoHandler: (id: number | null) => void;
+  setDeletableTodoHandler: (id: number | null) => void;
   setEditableTodoHandler: (id: number | null) => void;
+  openModalHandler: () => void;
   isEdit: boolean;
 }
 
 const Todo = ({
   todo,
   filterTodoHandler,
-  deleteTodoHandler,
+  setDeletableTodoHandler,
   setEditableTodoHandler,
   isEdit,
+  openModalHandler,
 }: ITodoProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
   const menuOpened = Boolean(anchorEl);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -48,13 +48,10 @@ const Todo = ({
     handleCloseMenu();
   };
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const handleModaInitialization = (todoID: number | null) => {
+    openModalHandler();
+    setDeletableTodoHandler(todoID);
     handleCloseMenu();
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -111,7 +108,10 @@ const Todo = ({
             </ListItemIcon>
             <ListItemText primary="Edit" />
           </MenuItem>
-          <MenuItem color="secondary" onClick={handleOpenModal}>
+          <MenuItem
+            color="secondary"
+            onClick={() => handleModaInitialization(todo.id)}
+          >
             <ListItemIcon>
               <DeleteIcon color="secondary" fontSize="small" />
             </ListItemIcon>
@@ -121,12 +121,6 @@ const Todo = ({
           </MenuItem>
         </Menu>
       </el.Todo>
-      <ConfirmationModal
-        isModalOpen={isModalOpen}
-        todo={todo}
-        closeModalHandler={handleCloseModal}
-        deleteTodoHandler={deleteTodoHandler}
-      />
     </ListItem>
   );
 };

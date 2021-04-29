@@ -9,17 +9,22 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 interface IConfirmationModalProps {
   isModalOpen: boolean;
-  todo: ITodo;
+  todoID: number | null;
   closeModalHandler: () => void;
   deleteTodoHandler: (id: number | null) => void;
 }
 
 export const ConfirmationModal = ({
   isModalOpen,
-  todo,
+  todoID,
   closeModalHandler,
   deleteTodoHandler,
 }: IConfirmationModalProps) => {
+  const handleDeleteTodo = (todoID: number | null) => {
+    deleteTodoHandler(todoID);
+    closeModalHandler();
+  };
+
   return (
     <Dialog
       open={isModalOpen}
@@ -38,7 +43,7 @@ export const ConfirmationModal = ({
           Cancel
         </Button>
         <Button
-          onClick={() => deleteTodoHandler(todo.id)}
+          onClick={() => handleDeleteTodo(todoID)}
           color="primary"
           autoFocus
         >
