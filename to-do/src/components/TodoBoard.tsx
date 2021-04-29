@@ -7,8 +7,8 @@ import Button from "@material-ui/core/Button";
 import { ConfirmationModal } from "./ConfirmationModal";
 interface ITodoBoardProps {
   todos: Array<ITodo>;
-  deleteTodoHandler: () => void;
-  setEditableTodoHandler: () => void;
+  deleteTodoHandler: (id: number | null) => void;
+  setEditableTodoHandler: (id: number | null) => void;
   isEdit: boolean;
 }
 

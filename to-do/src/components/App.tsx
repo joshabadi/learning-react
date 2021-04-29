@@ -1,8 +1,9 @@
 import React, { useReducer } from "react";
 import * as AppState from "./App.hooks";
+import { ITodo } from "../types/todo.types";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as GlobalElements from "../styles/App.Styled";
-import { Header } from "./Header.tsx";
+import { Header } from "./Header";
 import TodoForm from "./TodoForm";
 import TodoBoard from "./TodoBoard";
 import "fontsource-roboto";
@@ -13,18 +14,18 @@ export const App = () => {
     AppState.InitialAppState
   );
 
-  const handleCreateTodo = (todo) => {
+  const handleCreateTodo = (todo: ITodo) => {
     dispatch({ type: AppState.CREATE_TODO, payload: todo });
   };
 
-  const handleUpdateTodo = (updatedTodo) => {
+  const handleUpdateTodo = (updatedTodo: ITodo) => {
     dispatch({
       type: AppState.UPDATE_TODO,
       payload: updatedTodo,
     });
   };
 
-  const handleDeleteTodo = (todoID) =>
+  const handleDeleteTodo = (todoID: number | null) =>
     dispatch({ type: AppState.DELETE_TODO, payload: todoID });
 
   const handleCancelUpdate = () => dispatch({ type: AppState.CANCEL_EDIT });
@@ -32,7 +33,7 @@ export const App = () => {
   const handleGetEditableTodo = () =>
     state.todos.filter((todo) => todo.id === state.editableTodoID)[0];
 
-  const handleSetEditableTodo = (todoId) =>
+  const handleSetEditableTodo = (todoId: number | null) =>
     dispatch({ type: AppState.SET_EDITABLE_TODO_ID, payload: todoId });
 
   const handleToggleForm = () => {
