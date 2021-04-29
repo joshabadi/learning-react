@@ -11,4 +11,5 @@ export const TodoBoard = styled(List)`
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 `;
