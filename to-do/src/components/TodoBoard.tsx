@@ -20,12 +20,23 @@ const TodoBoard = ({
 }: ITodoBoardProps) => {
   const [usernameFilter, setUsernameFilter] = useState<string>("");
   const [deletableTodo, setDeletableTodo] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const pageLength = 10;
+  const maxTodos = pageLength * currentPage;
+  /* reason I created a new variable for filtered todos instead of just outputting them 
+  inside the render function is because I need the count for the filtered todos for the 
+  load more button. Otherwise I will need to write out a second todos.filter and get the length
+  of that */
+  const filteredTodos = todos.filter((todo) => {
+    return todo.username.includes(usernameFilter);
+  });
+  const todoCount = filteredTodos.length;
 
   const handleFilterTodos = (username: string) => {
     setUsernameFilter(username);
   };
-
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   return (
     <el.TodoBoard>
@@ -35,11 +46,8 @@ const TodoBoard = ({
         </Button>
       ) : null}
 
-      {todos
-        .filter((todo) => {
-          return todo.username.includes(usernameFilter);
-        })
-        .map((todo, index) => {
+      {filteredTodos.map((todo, index) => {
+        if (index < maxTodos) {
           return (
             <React.Fragment key={todo.id}>
               <Todo
@@ -55,7 +63,19 @@ const TodoBoard = ({
               ) : null}
             </React.Fragment>
           );
-        })}
+        } else {
+          return null;
+        }
+      })}
+
+      {maxTodos < todoCount ? (
+        <el.ButtonContainer>
+          <Button onClick={() => setCurrentPage(currentPage + 1)}>
+            Load more
+          </Button>
+        </el.ButtonContainer>
+      ) : null}
+
       <ConfirmationModal
         isModalOpen={isModalOpen}
         todoID={deletableTodo}
