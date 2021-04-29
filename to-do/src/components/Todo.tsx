@@ -20,7 +20,7 @@ interface ITodoProps {
   filterTodoHandler: (username: string) => void;
   setDeletableTodoHandler: (id: number | null) => void;
   setEditableTodoHandler: (id: number | null) => void;
-  toggleModalHandler: (arg0: boolean) => void;
+  toggleModalHandler: (isOpen: boolean) => void;
   isEdit: boolean;
 }
 

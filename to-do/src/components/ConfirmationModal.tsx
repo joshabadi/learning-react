@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 interface IConfirmationModalProps {
   isModalOpen: boolean;
   todoID: number | null;
-  toggleModalHandler: (arg0: boolean) => void;
+  toggleModalHandler: (isOpen: boolean) => void;
   deleteTodoHandler: (id: number | null) => void;
 }
 
