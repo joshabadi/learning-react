@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import * as AppState from "./App.hooks";
+import * as AppState from "../hooks/App.hooks";
 import { ITodo } from "../types/todo.types";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as GlobalElements from "../styles/App.Styled";
