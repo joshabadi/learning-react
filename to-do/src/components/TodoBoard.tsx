@@ -20,25 +20,29 @@ const TodoBoard = ({
 }: ITodoBoardProps) => {
   const [usernameFilter, setUsernameFilter] = useState<string>("");
   const [deletableTodo, setDeletableTodo] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const pageLength = 10;
+  const maxTodos = pageLength * currentPage;
+
+  const filteredTodosByUser = todos.filter((todo) => {
+    return todo.username.includes(usernameFilter);
+  });
+  const todoCount = filteredTodosByUser.length;
 
   const handleFilterTodos = (username: string) => {
     setUsernameFilter(username);
   };
 
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-
   return (
     <el.TodoBoard>
       {usernameFilter ? (
-        <Button color="default" onClick={() => handleFilterTodos("")}>
-          &larr;
-        </Button>
+        <Button onClick={() => handleFilterTodos("")}>&larr;</Button>
       ) : null}
 
-      {todos
-        .filter((todo) => {
-          return todo.username.includes(usernameFilter);
-        })
+      {filteredTodosByUser
+        .filter((todo, index) => index < maxTodos)
         .map((todo, index) => {
           return (
             <React.Fragment key={todo.id}>
@@ -50,12 +54,21 @@ const TodoBoard = ({
                 isEdit={isEdit}
                 toggleModalHandler={setIsModalOpen}
               />
-              {index < todos.length - 1 ? (
+              {index < maxTodos - 1 && (
                 <Divider variant="inset" component="li" />
-              ) : null}
+              )}
             </React.Fragment>
           );
         })}
+
+      {maxTodos < todoCount ? (
+        <el.ButtonContainer>
+          <Button onClick={() => setCurrentPage(currentPage + 1)}>
+            Load more
+          </Button>
+        </el.ButtonContainer>
+      ) : null}
+
       <ConfirmationModal
         isModalOpen={isModalOpen}
         todoID={deletableTodo}
